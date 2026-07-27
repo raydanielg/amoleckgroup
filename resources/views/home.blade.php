@@ -132,24 +132,23 @@
     </div>
 
     {{-- Appointments by Service --}}
-    <div class="bg-white rounded-xl border p-5">
+    <div class="bg-white rounded-xl border p-5 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
         <div class="mb-4">
-            <h3 class="text-sm font-semibold text-gray-900">Appointments</h3>
-            <p class="text-xs text-gray-400">Last 7 days</p>
+            <h3 class="text-sm font-semibold text-gray-900">Appointments by Service</h3>
+            <p class="text-xs text-gray-400">All time</p>
         </div>
-        <div class="flex items-end gap-2 h-56">
-            @foreach($volumeDays as $i => $vol)
-                @php
-                    $maxVol = max($volumeDays) ?: 1;
-                    $pct = ($vol / $maxVol) * 100;
-                @endphp
-                <div class="flex-1 flex flex-col items-center gap-1.5 group cursor-pointer">
-                    <div class="w-full bg-gray-50 rounded-t-md relative h-48 overflow-hidden">
-                        <div class="absolute bottom-0 left-0 right-0 rounded-t-md transition-all duration-300 bg-emerald-500" style="height: {{ max($pct, 4) }}%"></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400 font-medium">{{ $dayLabels[$i] }}</span>
+        <div class="space-y-3">
+            @forelse($appointmentsByService ?? [] as $service => $count)
+            <div class="flex items-center justify-between text-sm">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full @if($service === 'physiotherapy') bg-emerald-500 @elseif($service === 'ames') bg-sky-500 @elseif($service === 'asca') bg-amber-500 @elseif($service === 'amotech') bg-violet-500 @else bg-gray-400 @endif"></div>
+                    <span class="text-gray-600 capitalize">{{ str_replace('_', ' ', $service) }}</span>
                 </div>
-            @endforeach
+                <span class="font-semibold text-gray-900">{{ $count }}</span>
+            </div>
+            @empty
+            <p class="text-sm text-gray-400 text-center py-4">No data</p>
+            @endforelse
         </div>
     </div>
 </div>
