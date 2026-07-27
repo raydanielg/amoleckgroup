@@ -350,6 +350,192 @@
             {{-- Form Body --}}
             <div class="p-6 sm:p-8">
 
+                {{-- Step 1: Choose Service --}}
+                <div id="step1" class="booking-step">
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Choose a Service</h3>
+                    <p class="text-sm text-gray-500 mb-5">What would you like to book?</p>
+                    <div class="space-y-3">
+                        @foreach(['Physiotherapy — Back Pain' => 'Treatment and rehabilitation for back pain conditions.', 'Physiotherapy — Neck Pain' => 'Treatment and rehabilitation for neck pain conditions.', 'Physiotherapy — Joint Pain' => 'Treatment for knee, shoulder, hip and other joint pain.', 'Physiotherapy — Paralysis Rehabilitation' => 'Rehabilitation support for paralysis and mobility recovery.', 'Physiotherapy — General' => 'General physiotherapy session for any condition.'] as $svc => $desc)
+                        <label class="service-option flex items-start gap-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:border-emerald-300 transition-colors">
+                            <input type="radio" name="service" value="{{ $svc }}" class="mt-1 text-emerald-600">
+                            <div class="flex-1"><p class="text-sm font-bold text-gray-900">{{ $svc }}</p><p class="text-xs text-gray-500 mt-0.5">{{ $desc }}</p></div>
+                        </label>
+                        @endforeach
+                        <label class="service-option flex items-start gap-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:border-emerald-300 transition-colors">
+                            <input type="radio" name="service" value="Free Counselling / Consultation" class="mt-1 text-emerald-600">
+                            <div class="flex-1"><p class="text-sm font-bold text-gray-900">Free Counselling / Consultation</p><p class="text-xs text-gray-500 mt-0.5">Free consultation to discuss your needs and get advice.</p></div>
+                        </label>
+                        <label class="service-option flex items-start gap-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:border-emerald-300 transition-colors">
+                            <input type="radio" name="service" value="Division Enquiry" class="mt-1 text-emerald-600" id="divisionRadio">
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-gray-900">Division Enquiry</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Enquire about AMES, APHAMKO, ASCA, or AMOTECH services.</p>
+                                <select id="divisionSelect" class="mt-2 w-full text-sm rounded-lg border border-gray-200 px-3 py-2 hidden">
+                                    <option value="">Select a division</option>
+                                    <option value="AMES — Medical Equipment">AMES — Medical Equipment</option>
+                                    <option value="APHAMKO — Pharmaceuticals">APHAMKO — Pharmaceuticals</option>
+                                    <option value="ASCA — Natural Skin Care">ASCA — Natural Skin Care</option>
+                                    <option value="AMOTECH — Technology">AMOTECH — Technology</option>
+                                </select>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                {{-- Step 2: Choose Care Type --}}
+                <div id="step2" class="booking-step hidden">
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Choose Care Type</h3>
+                    <p class="text-sm text-gray-500 mb-5">How would you like to receive care?</p>
+                    <div class="space-y-3">
+                        <label class="care-option flex items-start gap-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:border-emerald-300 transition-colors">
+                            <input type="radio" name="careType" value="Home Visit" class="mt-1 text-emerald-600" id="homeRadio">
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-gray-900">Home Visit (Mobile Physiotherapy)</p>
+                                <p class="text-xs text-gray-500 mt-0.5">A therapist comes to your home. Enter your location below.</p>
+                                <input type="text" id="homeAddress" placeholder="Enter your area/address (e.g. Njiro, Arusha)" class="mt-2 w-full text-sm rounded-lg border border-gray-200 px-3 py-2 hidden">
+                            </div>
+                        </label>
+                        <label class="care-option flex items-start gap-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:border-emerald-300 transition-colors">
+                            <input type="radio" name="careType" value="Clinic-Based" class="mt-1 text-emerald-600" id="clinicRadio">
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-gray-900">Clinic-Based Care</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Visit our clinic. Select your preferred location below.</p>
+                                <select id="clinicSelect" class="mt-2 w-full text-sm rounded-lg border border-gray-200 px-3 py-2 hidden">
+                                    <option value="">Select a clinic</option>
+                                    <option value="Amoleck Clinic — Arusha City">Amoleck Clinic — Arusha City</option>
+                                    <option value="Amoleck Clinic — Njiro">Amoleck Clinic — Njiro</option>
+                                    <option value="Amoleck Clinic — Moshi">Amoleck Clinic — Moshi</option>
+                                </select>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                {{-- Step 3: Choose Date and Time --}}
+                <div id="step3" class="booking-step hidden">
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Choose Date and Time</h3>
+                    <p class="text-sm text-gray-500 mb-5">Pick an available day and time slot.</p>
+                    <div class="mb-6">
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Select Date</label>
+                        <input type="date" id="bookingDate" class="w-full sm:w-auto text-sm rounded-lg border border-gray-200 px-4 py-2.5">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Available Time Slots</label>
+                        <div id="timeSlots" class="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                            <button type="button" class="time-slot px-3 py-2.5 text-sm font-semibold rounded-lg border border-gray-200 hover:border-emerald-400 hover:bg-emerald-50 transition-colors" data-time="08:00">08:00</button>
+                            <button type="button" class="time-slot px-3 py-2.5 text-sm font-semibold rounded-lg border border-gray-200 hover:border-emerald-400 hover:bg-emerald-50 transition-colors" data-time="09:00">09:00</button>
+                            <button type="button" class="time-slot px-3 py-2.5 text-sm font-semibold rounded-lg border border-gray-200 hover:border-emerald-400 hover:bg-emerald-50 transition-colors" data-time="10:00">10:00</button>
+                            <button type="button" class="time-slot px-3 py-2.5 text-sm font-semibold rounded-lg border border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed" data-time="11:00" disabled>11:00</button>
+                            <button type="button" class="time-slot px-3 py-2.5 text-sm font-semibold rounded-lg border border-gray-200 hover:border-emerald-400 hover:bg-emerald-50 transition-colors" data-time="12:00">12:00</button>
+                            <button type="button" class="time-slot px-3 py-2.5 text-sm font-semibold rounded-lg border border-gray-200 hover:border-emerald-400 hover:bg-emerald-50 transition-colors" data-time="14:00">14:00</button>
+                            <button type="button" class="time-slot px-3 py-2.5 text-sm font-semibold rounded-lg border border-gray-200 hover:border-emerald-400 hover:bg-emerald-50 transition-colors" data-time="15:00">15:00</button>
+                            <button type="button" class="time-slot px-3 py-2.5 text-sm font-semibold rounded-lg border border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed" data-time="16:00" disabled>16:00</button>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">Greyed out slots are unavailable.</p>
+                    </div>
+                </div>
+
+                {{-- Step 4: Enter Details --}}
+                <div id="step4" class="booking-step hidden">
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Your Details</h3>
+                    <p class="text-sm text-gray-500 mb-5">Tell us about yourself so we can prepare.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Full Name <span class="text-rose-500">*</span></label>
+                            <input type="text" id="patientName" class="w-full text-sm rounded-lg border border-gray-200 px-4 py-2.5" placeholder="Enter your full name">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Phone Number <span class="text-rose-500">*</span></label>
+                            <input type="tel" id="patientPhone" class="w-full text-sm rounded-lg border border-gray-200 px-4 py-2.5" placeholder="+255 6XX XXX XXX">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Describe Your Problem or Need <span class="text-rose-500">*</span></label>
+                            <textarea id="problemDesc" rows="3" class="w-full text-sm rounded-lg border border-gray-200 px-4 py-2.5" placeholder="Briefly describe what you need help with..."></textarea>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Email <span class="text-gray-400 font-normal">(optional)</span></label>
+                                <input type="email" id="patientEmail" class="w-full text-sm rounded-lg border border-gray-200 px-4 py-2.5" placeholder="you@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Age <span class="text-gray-400 font-normal">(optional)</span></label>
+                                <input type="number" id="patientAge" class="w-full text-sm rounded-lg border border-gray-200 px-4 py-2.5" placeholder="e.g. 35">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">How did you hear about Amoleck? <span class="text-gray-400 font-normal">(optional)</span></label>
+                            <select id="referralSource" class="w-full text-sm rounded-lg border border-gray-200 px-4 py-2.5">
+                                <option value="">Select an option</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Friend / Family">Friend / Family</option>
+                                <option value="Google Search">Google Search</option>
+                                <option value="Referral from Clinic">Referral from Clinic</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Step 5: Review and Confirm --}}
+                <div id="step5" class="booking-step hidden">
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Review Your Booking</h3>
+                    <p class="text-sm text-gray-500 mb-5">Please confirm the details below before submitting.</p>
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-5 space-y-3">
+                        <div class="flex justify-between text-sm"><span class="text-gray-500">Service</span><span id="reviewService" class="font-semibold text-gray-900 text-right"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-gray-500">Care Type</span><span id="reviewCareType" class="font-semibold text-gray-900 text-right"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-gray-500">Location</span><span id="reviewLocation" class="font-semibold text-gray-900 text-right"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-gray-500">Date</span><span id="reviewDate" class="font-semibold text-gray-900 text-right"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-gray-500">Time</span><span id="reviewTime" class="font-semibold text-gray-900 text-right"></span></div>
+                        <div class="border-t border-gray-200 pt-3 flex justify-between text-sm"><span class="text-gray-500">Name</span><span id="reviewName" class="font-semibold text-gray-900 text-right"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-gray-500">Phone</span><span id="reviewPhone" class="font-semibold text-gray-900 text-right"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-gray-500">Description</span><span id="reviewDesc" class="font-semibold text-gray-900 text-right max-w-[60%]"></span></div>
+                    </div>
+                </div>
+
+                {{-- Success Screen --}}
+                <div id="bookingSuccess" class="booking-step hidden text-center py-8">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 flex items-center justify-center mb-5">
+                        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Booking Confirmed!</h3>
+                    <p class="text-sm text-gray-500 mb-4">Your appointment has been received. We'll contact you shortly to confirm.</p>
+                    <div class="inline-block bg-emerald-50 border border-emerald-200 rounded-xl px-6 py-3 mb-4">
+                        <p class="text-xs text-gray-500 uppercase tracking-wider">Reference Number</p>
+                        <p id="refNumber" class="text-lg font-extrabold text-emerald-700"></p>
+                    </div>
+                    <p class="text-xs text-gray-400">Please save your reference number. You can use it to reschedule or cancel.</p>
+                    <button type="button" id="resetBooking" class="mt-6 inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold rounded-xl transition-colors">Book Another Appointment</button>
+                </div>
+
+                {{-- Navigation Buttons --}}
+                <div id="bookingNav" class="flex items-center justify-between mt-6 pt-5 border-t border-gray-100">
+                    <button type="button" id="btnPrev" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-gray-900 rounded-xl transition-colors disabled:opacity-0" disabled>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                        Back
+                    </button>
+                    <button type="button" id="btnNext" class="inline-flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition-colors">
+                        Next
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                    <button type="button" id="btnConfirm" class="hidden inline-flex items-center gap-2 px-6 py-2.5 bg-gold-500 hover:bg-gold-600 text-white text-sm font-bold rounded-xl transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Confirm Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{-- Quick contact below form --}}
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-500">
+            <span>Prefer to call?</span>
+            <a href="tel:+255626371854" class="inline-flex items-center gap-2 font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                +255 626 371 854
+            </a>
+        </div>
+    </div>
+</section>
+
 {{-- =================== 6. CONTACT / FOOTER =================== --}}
 {{-- Footer is in layouts/landing.blade.php with id="contact" --}}
 
