@@ -29,3 +29,13 @@ Route::get('/divisions/amotech', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/appointments', function () {
+        return view('appointments');
+    })->name('appointments.index');
+
+    Route::get('/clients', function () {
+        return view('clients');
+    })->name('clients.index');
+});
