@@ -9,6 +9,12 @@
 
     <title>{{ config('app.name', 'Amoleck Group Company LTD') }}</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('amock_big_logo.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('amock_big_logo.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('amock_big_logo.png') }}">
+    <link rel="shortcut icon" href="{{ asset('amock_big_logo.png') }}">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -21,12 +27,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center text-decoration-none" href="{{ url('/') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-building-fill-check me-2 text-primary" viewBox="0 0 16 16">
-                        <path d="M12.5 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
-                        <path d="M13.5 9a2.5 2.5 0 0 0-2.45 2h-2.1a2.5 2.5 0 0 0-2.45-2 2.5 2.5 0 0 0-2.45 2H3.5V2h5v3h3v3h2z"/>
-                        <path d="M8.5 8.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 0 1H9v.5a.5.5 0 0 1-1 0V10H7.5a.5.5 0 0 1 0-1H8v-.5a.5.5 0 0 1 .5-.5"/>
-                        <path d="M2 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1h.5a.5.5 0 0 1 .5.5V5h1V4.5a.5.5 0 0 1 .5-.5H14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V2.5a.5.5 0 0 1 .5-.5H2zm1 1v1h1V2zm0 2v1h1V4zm0 2v1h1V6zm0 2v1h1V8zm0 2v1h1v-1zm0 2v1h1v-1zM3 12v1h1v-1zm0 1v1h1v-1zm1 0v1h1v-1zm1 0v1h1v-1zm1 0v1h1v-1zm1 0v1h1v-1zM9 2v1h1V2zm0 2v1h1V4zm0 2v1h1V6zm0 2v1h1V8zm0 2v1h1v-1zm0 2v1h1v-1zm1 0v1h1v-1zm1 0v1h1v-1zm1 0v1h1v-1zm1-1v1h1v-1zm0-1v1h1V8zm0-1v1h1V6zm0-1v1h1V4zm0-1v1h1V2zm0-1v1h1V1zm0-1v1h1V0z"/>
-                    </svg>
+                    <img src="{{ asset('amock_big_logo.png') }}" alt="Amoleck Group Company LTD" class="me-2" style="width: 36px; height: 36px; object-fit: contain;">
                     <span class="fw-bold fs-5 text-dark">{{ config('app.name', 'Amoleck Group Company LTD') }}</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

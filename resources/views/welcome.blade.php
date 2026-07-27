@@ -4,7 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Amoleck Group Company LTD') }}</title>
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('amock_big_logo.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('amock_big_logo.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('amock_big_logo.png') }}">
+        <link rel="shortcut icon" href="{{ asset('amock_big_logo.png') }}">
 
         @fonts
 
