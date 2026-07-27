@@ -134,10 +134,10 @@
         </div>
     </div>
 
-    {{-- Task Volume Bar Chart --}}
+    {{-- Appointments by Service --}}
     <div class="bg-white rounded-xl border p-5">
         <div class="mb-4">
-            <h3 class="text-sm font-semibold text-gray-900">Task Volume</h3>
+            <h3 class="text-sm font-semibold text-gray-900">Appointments</h3>
             <p class="text-xs text-gray-400">Last 7 days</p>
         </div>
         <div class="flex items-end gap-2 h-56">
