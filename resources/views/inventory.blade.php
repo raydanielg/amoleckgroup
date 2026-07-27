@@ -12,7 +12,7 @@
 </style>
 
 {{-- Header --}}
-<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap">
+<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap animate__animated animate__fadeInDown">
     <div class="min-w-0">
         <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 tracking-tight">Inventory / Stock</h1>
         <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Manage stock levels across all divisions</p>
@@ -31,73 +31,74 @@
 
 {{-- Quick Stats --}}
 <div class="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4 mb-6">
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.05s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Total Items</p>
-                <p class="text-xl font-bold text-gray-900">248</p>
+                <p class="text-xl font-bold text-gray-900">{{ $total ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Low Stock</p>
-                <p class="text-xl font-bold text-gray-900">8</p>
+                <p class="text-xl font-bold text-gray-900">{{ $lowStock ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.15s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Out of Stock</p>
-                <p class="text-xl font-bold text-gray-900">3</p>
+                <p class="text-xl font-bold text-gray-900">{{ $outOfStock ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Stock Value</p>
-                <p class="text-xl font-bold text-gray-900">TSh 42M</p>
+                <p class="text-xl font-bold text-gray-900">TSh {{ number_format(($stockValue ?? 0) / 1000000, 1) }}M</p>
             </div>
         </div>
     </div>
 </div>
 
 {{-- Filters --}}
-<div class="bg-white rounded-xl border p-4 mb-6">
-    <div class="flex flex-col sm:flex-row gap-3">
+<div class="bg-white rounded-xl border p-4 mb-6 animate__animated animate__fadeInUp" style="animation-delay: 0.25s">
+    <form class="flex flex-col sm:flex-row gap-3" method="GET" action="{{ route('inventory.index') }}">
         <div class="flex-1 relative">
             <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="invSearch" placeholder="Search by item name or SKU..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by item name or SKU..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all">
         </div>
-        <select id="filterDivision" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
+        <select name="division" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
             <option value="">All Divisions</option>
-            <option value="ames">AMES</option>
-            <option value="aphamko">APHAMKO</option>
-            <option value="asca">ASCA</option>
-            <option value="amotech">AMOTECH</option>
+            <option value="ames" {{ request('division') === 'ames' ? 'selected' : '' }}>AMES</option>
+            <option value="aphamko" {{ request('division') === 'aphamko' ? 'selected' : '' }}>APHAMKO</option>
+            <option value="asca" {{ request('division') === 'asca' ? 'selected' : '' }}>ASCA</option>
+            <option value="amotech" {{ request('division') === 'amotech' ? 'selected' : '' }}>AMOTECH</option>
         </select>
-        <select id="filterStock" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
+        <select name="stock" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
             <option value="">All Stock Levels</option>
-            <option value="in">In Stock</option>
-            <option value="low">Low Stock</option>
-            <option value="out">Out of Stock</option>
+            <option value="in" {{ request('stock') === 'in' ? 'selected' : '' }}>In Stock</option>
+            <option value="low" {{ request('stock') === 'low' ? 'selected' : '' }}>Low Stock</option>
+            <option value="out" {{ request('stock') === 'out' ? 'selected' : '' }}>Out of Stock</option>
         </select>
-    </div>
+        <button type="submit" class="px-3 py-2 text-sm font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">Filter</button>
+    </form>
 </div>
 
 {{-- Inventory Table --}}
