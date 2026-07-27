@@ -21,7 +21,7 @@
 </style>
 
 {{-- Header --}}
-<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap">
+<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap animate__animated animate__fadeInDown">
     <div class="min-w-0">
         <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 tracking-tight">Appointments</h1>
         <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Manage all bookings across divisions</p>
@@ -40,83 +40,84 @@
 
 {{-- Quick Stats --}}
 <div class="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4 mb-6">
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.05s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Confirmed</p>
-                <p class="text-xl font-bold text-gray-900">24</p>
+                <p class="text-xl font-bold text-gray-900">{{ $confirmed ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Pending</p>
-                <p class="text-xl font-bold text-gray-900">3</p>
+                <p class="text-xl font-bold text-gray-900">{{ $pending ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.15s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Today</p>
-                <p class="text-xl font-bold text-gray-900">8</p>
+                <p class="text-xl font-bold text-gray-900">{{ $today ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Completed</p>
-                <p class="text-xl font-bold text-gray-900">16</p>
+                <p class="text-xl font-bold text-gray-900">{{ $completed ?? 0 }}</p>
             </div>
         </div>
     </div>
 </div>
 
 {{-- Filters --}}
-<div class="bg-white rounded-xl border p-4 mb-6">
-    <div class="flex flex-col sm:flex-row gap-3">
+<div class="bg-white rounded-xl border p-4 mb-6 animate__animated animate__fadeInUp" style="animation-delay: 0.25s">
+    <form class="flex flex-col sm:flex-row gap-3" method="GET" action="{{ route('appointments.index') }}">
         <div class="flex-1 relative">
             <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="apptSearch" placeholder="Search by name, ref, or phone..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name, ref, or phone..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all">
         </div>
-        <select id="filterService" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
+        <select name="service" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
             <option value="">All Services</option>
-            <option value="physiotherapy">Physiotherapy</option>
-            <option value="ames">AMES Enquiry</option>
-            <option value="asca">ASCA Consult</option>
-            <option value="amotech">AMOTECH</option>
+            <option value="physiotherapy" {{ request('service') === 'physiotherapy' ? 'selected' : '' }}>Physiotherapy</option>
+            <option value="ames" {{ request('service') === 'ames' ? 'selected' : '' }}>AMES Enquiry</option>
+            <option value="asca" {{ request('service') === 'asca' ? 'selected' : '' }}>ASCA Consult</option>
+            <option value="amotech" {{ request('service') === 'amotech' ? 'selected' : '' }}>AMOTECH</option>
         </select>
-        <select id="filterCare" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
+        <select name="care_type" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
             <option value="">All Care Types</option>
-            <option value="home">Home Visit</option>
-            <option value="clinic">Clinic-Based</option>
+            <option value="home" {{ request('care_type') === 'home' ? 'selected' : '' }}>Home Visit</option>
+            <option value="clinic" {{ request('care_type') === 'clinic' ? 'selected' : '' }}>Clinic-Based</option>
         </select>
-        <select id="filterStatus" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
+        <select name="status" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
             <option value="">All Status</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="pending">Pending</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
+            <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+            <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+            <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Completed</option>
+            <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
         </select>
-    </div>
+        <button type="submit" class="px-3 py-2 text-sm font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">Filter</button>
+    </form>
 </div>
 
 {{-- Appointments Table --}}
-<div class="bg-white rounded-xl border overflow-hidden">
+<div class="bg-white rounded-xl border overflow-hidden animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
             <thead>
@@ -132,55 +133,41 @@
                 </tr>
             </thead>
             <tbody id="apptTableBody">
-                @php
-                    $appts = [
-                        ['AMO-2026-001', 'John Doe', '0754 123 456', 'Physiotherapy', 'Home Visit', 'home', 'Today, 09:00 AM', 'Dr. Sarah', 'confirmed', 'physiotherapy'],
-                        ['AMO-2026-002', 'Mary Smith', '0788 654 321', 'Physiotherapy', 'Clinic', 'clinic', 'Today, 10:30 AM', 'Dr. Sarah', 'confirmed', 'physiotherapy'],
-                        ['AMO-2026-003', 'Grace Komba', '0712 987 654', 'Physiotherapy', 'Home Visit', 'home', 'Today, 02:00 PM', 'Unassigned', 'pending', 'physiotherapy'],
-                        ['AMO-2026-004', 'Joseph Mwangi', '0766 345 678', 'AMES Enquiry', 'Clinic', 'clinic', 'Today, 03:30 PM', '—', 'confirmed', 'ames'],
-                        ['AMO-2026-005', 'Asha Hassan', '0744 567 890', 'ASCA Consult', 'Clinic', 'clinic', 'Today, 04:00 PM', '—', 'pending', 'asca'],
-                        ['AMO-2026-006', 'Peter Joseph', '0733 111 222', 'Physiotherapy', 'Home Visit', 'home', 'Tomorrow, 09:00 AM', 'Dr. Michael', 'confirmed', 'physiotherapy'],
-                        ['AMO-2026-007', 'Neema Baraka', '0755 333 444', 'Physiotherapy', 'Clinic', 'clinic', 'Tomorrow, 11:00 AM', 'Dr. Sarah', 'confirmed', 'physiotherapy'],
-                        ['AMO-2026-008', 'David Wilson', '0766 555 666', 'AMOTECH', 'Clinic', 'clinic', 'Tomorrow, 02:00 PM', '—', 'pending', 'amotech'],
-                        ['AMO-2026-009', 'Rebecca John', '0788 777 888', 'Physiotherapy', 'Home Visit', 'home', 'Jul 29, 10:00 AM', 'Dr. Michael', 'confirmed', 'physiotherapy'],
-                        ['AMO-2026-010', 'Frank Mushi', '0712 999 000', 'Physiotherapy', 'Clinic', 'clinic', 'Jul 29, 03:00 PM', 'Dr. Sarah', 'completed', 'physiotherapy'],
-                    ];
-                @endphp
-                @foreach($appts as $appt)
+                @forelse($appointments ?? [] as $appt)
                 <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors appt-row"
-                    data-search="{{ strtolower($appt[0] . ' ' . $appt[1] . ' ' . $appt[2]) }}"
-                    data-service="{{ $appt[9] }}"
-                    data-care="{{ $appt[5] }}"
-                    data-status="{{ $appt[8] }}">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">{{ $appt[0] }}</td>
+                    data-search="{{ strtolower($appt->reference . ' ' . $appt->client?->fullName() . ' ' . $appt->client?->phone) }}"
+                    data-service="{{ $appt->service }}"
+                    data-care="{{ $appt->care_type }}"
+                    data-status="{{ $appt->status }}">
+                    <td class="px-5 py-3 font-mono text-xs text-gray-500">{{ $appt->reference }}</td>
                     <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">{{ $appt[1] }}</div>
-                        <div class="text-xs text-gray-500">{{ $appt[2] }}</div>
+                        <div class="font-medium text-gray-900">{{ $appt->client?->fullName() ?? 'Unknown' }}</div>
+                        <div class="text-xs text-gray-500">{{ $appt->client?->phone }}</div>
                     </td>
-                    <td class="px-5 py-3 text-gray-600">{{ $appt[3] }}</td>
+                    <td class="px-5 py-3 text-gray-600 capitalize">{{ str_replace('_', ' ', $appt->service) }}</td>
                     <td class="px-5 py-3">
-                        @if($appt[5] === 'home')
+                        @if($appt->care_type === 'home')
                         <span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/></svg>Home</span>
                         @else
                         <span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16"/></svg>Clinic</span>
                         @endif
                     </td>
-                    <td class="px-5 py-3 text-gray-600">{{ $appt[6] }}</td>
-                    <td class="px-5 py-3 text-gray-600">{{ $appt[7] }}</td>
+                    <td class="px-5 py-3 text-gray-600">{{ $appt->appointment_date?->format('M d, Y') }} at {{ $appt->appointment_time?->format('h:i A') }}</td>
+                    <td class="px-5 py-3 text-gray-600">{{ $appt->therapist ?: '—' }}</td>
                     <td class="px-5 py-3">
-                        @if($appt[8] === 'confirmed')
+                        @if($appt->status === 'confirmed')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Confirmed</span>
-                        @elseif($appt[8] === 'pending')
+                        @elseif($appt->status === 'pending')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">Pending</span>
-                        @elseif($appt[8] === 'completed')
+                        @elseif($appt->status === 'completed')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-violet-50 text-violet-700 border border-violet-100">Completed</span>
-                        @elseif($appt[8] === 'cancelled')
+                        @elseif($appt->status === 'cancelled')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-50 text-red-700 border border-red-100">Cancelled</span>
                         @endif
                     </td>
                     <td class="px-5 py-3 text-right">
                         <div class="inline-flex items-center gap-1">
-                            @if($appt[8] === 'pending')
+                            @if($appt->status === 'pending')
                             <button class="p-1.5 rounded-lg hover:bg-emerald-50 text-emerald-600 transition-colors" title="Confirm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                             </button>
@@ -194,12 +181,16 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="8" class="px-5 py-8 text-center text-sm text-gray-400">No appointments found</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
     <div class="px-5 py-3 border-t border-gray-100 flex items-center justify-between">
-        <p class="text-xs text-gray-400">Showing <span id="apptCount">10</span> appointments</p>
+        <p class="text-xs text-gray-400">Showing <span id="apptCount">{{ count($appointments ?? []) }}</span> appointments</p>
         <div class="flex items-center gap-1">
             <button class="px-2.5 py-1 text-xs font-medium border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 transition-colors">Previous</button>
             <button class="px-2.5 py-1 text-xs font-medium bg-emerald-600 text-white rounded-lg">1</button>
