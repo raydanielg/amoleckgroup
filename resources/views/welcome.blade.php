@@ -381,20 +381,6 @@
     if (slides.length === 0) return;
     let current = 0;
 
-    function showSlide(idx) {
-        slides.forEach((s, i) => {
-            s.classList.toggle('opacity-100', i === idx);
-            s.classList.toggle('opacity-0', i !== idx);
-        });
-        dots.forEach((d, i) => {
-            d.className = d.className.replace(/bg-white\/(80|30)/, '').trim();
-            d.classList.add(i === idx ? 'bg-white/80' : 'bg-white/30');
-            if (i === idx) { d.classList.add('w-6'); d.classList.remove('w-2.5'); }
-            else { d.classList.add('w-2.5'); d.classList.remove('w-6'); }
-        });
-        current = idx;
-    }
-
     const captions = [
         'Professional physiotherapy — restoring movement, relieving pain.',
         'Quality medical equipment for hospitals, clinics, and home care.',
