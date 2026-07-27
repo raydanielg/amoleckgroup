@@ -259,100 +259,99 @@
     </div>
 </div>
 
-{{-- Recent Activity Table --}}
+{{-- Today's Appointments Table --}}
 <div class="bg-white rounded-xl border overflow-hidden">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b px-5 py-4 gap-3">
         <div>
-            <h3 class="text-sm font-semibold text-gray-900">Recent activity</h3>
-            <p class="text-xs text-gray-400">Latest updates across all departments</p>
+            <h3 class="text-sm font-semibold text-gray-900">Today's Appointments</h3>
+            <p class="text-xs text-gray-400">All bookings scheduled for today</p>
         </div>
         <div class="flex items-center gap-2">
             <div class="flex items-center bg-gray-100 rounded-lg p-0.5" id="tx-filters">
-                <button data-days="3" class="tx-filter-btn px-2.5 py-1 text-[11px] font-semibold rounded-md bg-emerald-600 text-white shadow-sm transition-all">3D</button>
+                <button data-days="1" class="tx-filter-btn px-2.5 py-1 text-[11px] font-semibold rounded-md bg-emerald-600 text-white shadow-sm transition-all">Today</button>
                 <button data-days="7" class="tx-filter-btn px-2.5 py-1 text-[11px] font-semibold rounded-md text-gray-600 hover:text-gray-900 transition-all">7D</button>
                 <button data-days="30" class="tx-filter-btn px-2.5 py-1 text-[11px] font-semibold rounded-md text-gray-600 hover:text-gray-900 transition-all">30D</button>
-                <button data-days="90" class="tx-filter-btn px-2.5 py-1 text-[11px] font-semibold rounded-md text-gray-600 hover:text-gray-900 transition-all">90D</button>
             </div>
-            <a href="#" class="text-xs font-medium text-gray-500 hover:text-gray-700 px-2 py-1 rounded-md hover:bg-gray-100 transition-colors">View all</a>
+            <a href="{{ route('appointments.index') }}" class="text-xs font-medium text-emerald-600 hover:text-emerald-700 px-2 py-1 rounded-md hover:bg-emerald-50 transition-colors">View all</a>
         </div>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
             <thead>
                 <tr class="text-left text-xs text-gray-500">
-                    <th class="px-5 py-3 font-medium">ID</th>
-                    <th class="px-5 py-3 font-medium">Activity</th>
-                    <th class="px-5 py-3 font-medium">Department</th>
-                    <th class="px-5 py-3 font-medium">Type</th>
+                    <th class="px-5 py-3 font-medium">Ref</th>
+                    <th class="px-5 py-3 font-medium">Patient</th>
+                    <th class="px-5 py-3 font-medium">Service</th>
+                    <th class="px-5 py-3 font-medium">Care Type</th>
+                    <th class="px-5 py-3 font-medium">Time</th>
                     <th class="px-5 py-3 font-medium">Status</th>
-                    <th class="px-5 py-3 font-medium">Date</th>
                 </tr>
             </thead>
             <tbody id="activityTableBody">
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('now') }}" data-search-text="act-001 project alpha launch it success">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">ACT-001</td>
+                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 09:00') }}" data-search-text="amo-2026-001 john doe physiotherapy home visit confirmed">
+                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-001</td>
                     <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">Project Alpha Launch</div>
-                        <div class="text-xs text-gray-500">Initial deployment completed</div>
+                        <div class="font-medium text-gray-900">John Doe</div>
+                        <div class="text-xs text-gray-500">0754 123 456</div>
                     </td>
-                    <td class="px-5 py-3 text-gray-500">Operations</td>
-                    <td class="px-5 py-3 text-gray-500">Project</td>
+                    <td class="px-5 py-3 text-gray-500">Physiotherapy</td>
+                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/></svg>Home Visit</span></td>
+                    <td class="px-5 py-3 text-gray-500">09:00 AM</td>
                     <td class="px-5 py-3">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Success</span>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Confirmed</span>
                     </td>
-                    <td class="px-5 py-3 text-gray-500">{{ date('M d, H:i') }}</td>
                 </tr>
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('-1 day') }}" data-search-text="act-002 payroll processing finance pending">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">ACT-002</td>
+                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 10:30') }}" data-search-text="amo-2026-002 mary smith physiotherapy clinic confirmed">
+                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-002</td>
                     <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">Monthly Payroll</div>
-                        <div class="text-xs text-gray-500">Processing salaries for July</div>
+                        <div class="font-medium text-gray-900">Mary Smith</div>
+                        <div class="text-xs text-gray-500">0788 654 321</div>
                     </td>
-                    <td class="px-5 py-3 text-gray-500">Finance</td>
-                    <td class="px-5 py-3 text-gray-500">Payroll</td>
+                    <td class="px-5 py-3 text-gray-500">Physiotherapy</td>
+                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg>Clinic</span></td>
+                    <td class="px-5 py-3 text-gray-500">10:30 AM</td>
+                    <td class="px-5 py-3">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Confirmed</span>
+                    </td>
+                </tr>
+                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 14:00') }}" data-search-text="amo-2026-003 grace komba physiotherapy home pending">
+                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-003</td>
+                    <td class="px-5 py-3">
+                        <div class="font-medium text-gray-900">Grace Komba</div>
+                        <div class="text-xs text-gray-500">0712 987 654</div>
+                    </td>
+                    <td class="px-5 py-3 text-gray-500">Physiotherapy</td>
+                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3"/></svg>Home Visit</span></td>
+                    <td class="px-5 py-3 text-gray-500">02:00 PM</td>
                     <td class="px-5 py-3">
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">Pending</span>
                     </td>
-                    <td class="px-5 py-3 text-gray-500">{{ date('M d, H:i', strtotime('-1 day')) }}</td>
                 </tr>
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('-2 days') }}" data-search-text="act-003 new employee onboarding hr success">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">ACT-003</td>
+                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 15:30') }}" data-search-text="amo-2026-004 joseph mwangi ames equipment enquiry confirmed">
+                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-004</td>
                     <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">New Employee Onboarding</div>
-                        <div class="text-xs text-gray-500">3 new staff members added</div>
+                        <div class="font-medium text-gray-900">Joseph Mwangi</div>
+                        <div class="text-xs text-gray-500">0766 345 678</div>
                     </td>
-                    <td class="px-5 py-3 text-gray-500">Management</td>
-                    <td class="px-5 py-3 text-gray-500">HR</td>
+                    <td class="px-5 py-3 text-gray-500">AMES Enquiry</td>
+                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5"/></svg>Clinic</span></td>
+                    <td class="px-5 py-3 text-gray-500">03:30 PM</td>
                     <td class="px-5 py-3">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Success</span>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Confirmed</span>
                     </td>
-                    <td class="px-5 py-3 text-gray-500">{{ date('M d, H:i', strtotime('-2 days')) }}</td>
                 </tr>
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('-3 days') }}" data-search-text="act-004 client meeting proposal crm success">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">ACT-004</td>
+                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 16:00') }}" data-search-text="amo-2026-005 asha hassan asca skincare consultation pending">
+                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-005</td>
                     <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">Client Meeting - Proposal</div>
-                        <div class="text-xs text-gray-500">Submitted proposal to new client</div>
+                        <div class="font-medium text-gray-900">Asha Hassan</div>
+                        <div class="text-xs text-gray-500">0744 567 890</div>
                     </td>
-                    <td class="px-5 py-3 text-gray-500">CRM</td>
-                    <td class="px-5 py-3 text-gray-500">Lead</td>
+                    <td class="px-5 py-3 text-gray-500">ASCA Consult</td>
+                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5"/></svg>Clinic</span></td>
+                    <td class="px-5 py-3 text-gray-500">04:00 PM</td>
                     <td class="px-5 py-3">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Success</span>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">Pending</span>
                     </td>
-                    <td class="px-5 py-3 text-gray-500">{{ date('M d, H:i', strtotime('-3 days')) }}</td>
-                </tr>
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('-5 days') }}" data-search-text="act-005 invoice payment overdue finance failed">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">ACT-005</td>
-                    <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">Invoice #INV-2024-089</div>
-                        <div class="text-xs text-gray-500">Payment overdue from client</div>
-                    </td>
-                    <td class="px-5 py-3 text-gray-500">Finance</td>
-                    <td class="px-5 py-3 text-gray-500">Invoice</td>
-                    <td class="px-5 py-3">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-50 text-red-700 border border-red-100">Failed</span>
-                    </td>
-                    <td class="px-5 py-3 text-gray-500">{{ date('M d, H:i', strtotime('-5 days')) }}</td>
                 </tr>
             </tbody>
         </table>
@@ -365,7 +364,7 @@
 (function() {
     const rows = Array.from(document.querySelectorAll('.tx-row'));
     const now = Math.floor(Date.now() / 1000);
-    const MIN_ROWS = 5;
+    const MIN_ROWS = 3;
 
     function getTimestamp(r) {
         return parseInt(r.dataset.timestamp || '0', 10);
@@ -421,7 +420,7 @@
         });
     });
 
-    applyFilter(3);
+    applyFilter(1);
 })();
 
 function exportTableToCSV(filename) {
