@@ -157,74 +157,105 @@
     </div>
 </div>
 
-{{-- Login Activity & Quick Stats --}}
+{{-- Needs Attention & Low Stock --}}
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-    {{-- Login Activity --}}
+    {{-- Needs Attention --}}
     <div class="lg:col-span-2 bg-white rounded-xl border p-5">
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
-                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                <div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                 </div>
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-900">Login Activity</h3>
-                    <p class="text-[10px] text-gray-400">Recent sessions on your account</p>
+                    <h3 class="text-sm font-semibold text-gray-900">Needs Your Attention</h3>
+                    <p class="text-[10px] text-gray-400">Most urgent items first</p>
                 </div>
             </div>
-            <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-md border border-emerald-100">Secure</span>
+            <span class="px-2 py-0.5 bg-red-50 text-red-700 text-[10px] font-bold rounded-md border border-red-100">4 urgent</span>
         </div>
-        <div class="space-y-3">
-            <div class="flex items-center gap-3 p-3 rounded-lg border border-emerald-200 bg-emerald-50/50">
-                <div class="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
-                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <div class="space-y-2">
+            <a href="{{ route('appointments.index') }}" class="flex items-center gap-3 p-3 rounded-lg border border-amber-200 bg-amber-50/50 hover:bg-amber-50 transition-colors">
+                <div class="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold text-gray-900">This device <span class="ml-1 px-1.5 py-0.5 bg-emerald-500 text-white text-[9px] font-bold rounded">Current</span></p>
-                    <p class="text-[11px] text-gray-500 mt-0.5">{{ request()->userAgent() ? \Illuminate\Support\Str::limit(request()->userAgent(), 40) : 'Unknown browser' }} &middot; {{ request()->ip() }}</p>
+                    <p class="text-xs font-semibold text-gray-900">3 new bookings awaiting confirmation</p>
+                    <p class="text-[11px] text-gray-500 mt-0.5">Physiotherapy — Home visit requests</p>
                 </div>
-                <span class="text-[10px] text-gray-400 shrink-0">Active now</span>
-            </div>
-            <div class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors">
+                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#" class="flex items-center gap-3 p-3 rounded-lg border border-red-200 bg-red-50/50 hover:bg-red-50 transition-colors">
+                <div class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-xs font-semibold text-gray-900">2 items out of stock</p>
+                    <p class="text-[11px] text-gray-500 mt-0.5">APHAMKO — Amoxicillin 500mg, Paracetamol syrup</p>
+                </div>
+                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#" class="flex items-center gap-3 p-3 rounded-lg border border-sky-200 bg-sky-50/50 hover:bg-sky-50 transition-colors">
+                <div class="w-9 h-9 rounded-full bg-sky-100 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-xs font-semibold text-gray-900">2 dispatches due today</p>
+                    <p class="text-[11px] text-gray-500 mt-0.5">ASCA skincare orders — Arusha & Moshi</p>
+                </div>
+                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#" class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors">
                 <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
-                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold text-gray-900">Previous login</p>
-                    <p class="text-[11px] text-gray-500 mt-0.5">Account created {{ auth()->user()->created_at?->diffForHumans() ?? 'recently' }}</p>
+                    <p class="text-xs font-semibold text-gray-900">1 AMOTECH project awaiting client feedback</p>
+                    <p class="text-[11px] text-gray-500 mt-0.5">Website redesign — 3 days overdue</p>
                 </div>
-                <span class="text-[10px] text-gray-400 shrink-0">{{ auth()->user()->created_at?->format('M d, Y') }}</span>
-            </div>
-        </div>
-        <div class="mt-3 pt-3 border-t border-gray-50 flex items-center justify-between">
-            <p class="text-[11px] text-gray-400">2FA is recommended for extra security</p>
-            <a href="#" class="text-[11px] font-medium text-emerald-600 hover:text-emerald-700">Security settings</a>
+                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
         </div>
     </div>
 
-    {{-- This Month Mini Card --}}
+    {{-- Low Stock Alerts --}}
     <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700 p-5 text-white">
         <div class="flex items-center gap-2 mb-4">
             <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-                <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             </div>
-            <h3 class="text-sm font-semibold text-white">This Month</h3>
+            <h3 class="text-sm font-semibold text-white">Low Stock Alerts</h3>
         </div>
-        <div class="space-y-4">
-            <div>
-                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Revenue</p>
-                <p class="text-2xl font-bold text-white mt-1">TSh 45.2M</p>
-            </div>
-            <div>
-                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Projects Completed</p>
-                <p class="text-2xl font-bold text-white mt-1">12</p>
-            </div>
-            <div class="pt-3 border-t border-gray-700">
-                <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-                    <p class="text-[11px] text-gray-300">All systems operational</p>
+        <div class="space-y-3">
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/5">
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-white truncate">Amoxicillin 500mg</p>
+                    <p class="text-[10px] text-gray-400">APHAMKO</p>
                 </div>
+                <span class="px-2 py-0.5 bg-red-500/20 text-red-300 text-[10px] font-bold rounded-md">Out</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/5">
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-white truncate">Paracetamol Syrup</p>
+                    <p class="text-[10px] text-gray-400">APHAMKO</p>
+                </div>
+                <span class="px-2 py-0.5 bg-red-500/20 text-red-300 text-[10px] font-bold rounded-md">Out</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/5">
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-white truncate">BP Monitor (Digital)</p>
+                    <p class="text-[10px] text-gray-400">AMES</p>
+                </div>
+                <span class="px-2 py-0.5 bg-amber-500/20 text-amber-300 text-[10px] font-bold rounded-md">Low</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/5">
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-white truncate">Body Jelly (500ml)</p>
+                    <p class="text-[10px] text-gray-400">ASCA</p>
+                </div>
+                <span class="px-2 py-0.5 bg-amber-500/20 text-amber-300 text-[10px] font-bold rounded-md">Low</span>
             </div>
         </div>
+        <a href="#" class="mt-4 block text-center text-[11px] font-medium text-gold-400 hover:text-gold-300 transition-colors">View all inventory →</a>
     </div>
 </div>
 
