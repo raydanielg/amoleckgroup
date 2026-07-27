@@ -13,24 +13,22 @@
 <style>
     .card-sm { transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
     .card-sm:hover { transform: translateY(-2px); box-shadow: 0 8px 30px -8px rgba(0,0,0,0.1); }
-    .skeleton { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s infinite; }
-    @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 </style>
 
 {{-- Welcome --}}
 <div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap">
     <div class="min-w-0">
         <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 tracking-tight">Hello {{ $firstName }} 👋</h1>
-        <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Here's what's happening with your business today.</p>
+        <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Here's what needs your attention today.</p>
     </div>
     <div class="flex items-center gap-2 shrink-0">
-        <button onclick="exportTableToCSV('activity.csv')" class="px-2 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors inline-flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span class="hidden sm:inline">Export</span>
-        </button>
-        <a href="#" class="px-2 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors inline-flex items-center gap-1.5">
+        <a href="{{ route('welcome') }}" target="_blank" class="px-2 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors inline-flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            <span class="hidden sm:inline">View Site</span>
+        </a>
+        <a href="{{ route('appointments.index') }}" class="px-2 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors inline-flex items-center gap-1.5">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            <span class="hidden sm:inline">New Report</span><span class="sm:hidden">New</span>
+            <span class="hidden sm:inline">Appointments</span><span class="sm:hidden">Appts</span>
         </a>
     </div>
 </div>
