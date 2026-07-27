@@ -121,55 +121,47 @@
                 </tr>
             </thead>
             <tbody id="orderTableBody">
-                @php
-                    $orders = [
-                        ['ORD-2026-001', 'Arusha Pharmacy', '0766 444 555', 'APHAMKO', 'aphamko', 'Amoxicillin x500, Paracetamol x300', 'TSh 1,250,000', 'Arusha', 'Today, 5:00 PM', 'transit'],
-                        ['ORD-2026-002', 'City Clinic', '0755 222 333', 'AMES', 'ames', 'BP Monitors x10, Stethoscopes x15', 'TSh 3,800,000', 'Dar es Salaam', 'Tomorrow, 12:00 PM', 'transit'],
-                        ['ORD-2026-003', 'Asha Hassan', '0744 567 890', 'ASCA', 'asca', 'Body Jelly x20, Soap x30', 'TSh 450,000', 'Moshi', 'Today, 3:00 PM', 'processing'],
-                        ['ORD-2026-004', 'Neema Skincare Shop', '0755 333 444', 'ASCA', 'asca', 'Body Jelly x50, Cream x40', 'TSh 1,100,000', 'Mwanza', 'Jul 29, 10:00 AM', 'processing'],
-                        ['ORD-2026-005', 'KCMC Hospital', '0754 000 111', 'AMES', 'ames', 'Wheelchairs x5, Patient Beds x3', 'TSh 8,500,000', 'Moshi', 'Jul 30, 2:00 PM', 'delayed'],
-                        ['ORD-2026-006', 'Joe Pharmacy', '0733 111 222', 'APHAMKO', 'aphamko', 'Cough Syrup x200, Vitamins x500', 'TSh 980,000', 'Arusha', 'Jul 24 (Delivered)', 'delivered'],
-                        ['ORD-2026-007', 'Moshi General', '0788 654 321', 'AMES', 'ames', 'Surgical Gloves x1000, Masks x2000', 'TSh 2,200,000', 'Moshi', 'Jul 23 (Delivered)', 'delivered'],
-                        ['ORD-2026-008', 'Tech Solutions Ltd', '0766 555 666', 'AMOTECH', 'amotech', 'Web Hosting (Annual)', 'TSh 600,000', 'Online', 'Active', 'delivered'],
-                        ['ORD-2026-009', 'St. Joseph Pharmacy', '0712 999 000', 'APHAMKO', 'aphamko', 'Antibiotics x300, IV Fluids x200', 'TSh 1,750,000', 'Dodoma', 'Jul 31, 4:00 PM', 'delayed'],
-                        ['ORD-2026-010', 'Beauty Hub', '0744 567 890', 'ASCA', 'asca', 'Body Jelly x100, Soap x50', 'TSh 2,100,000', 'Dar es Salaam', 'Jul 23 (Delivered)', 'delivered'],
-                    ];
-                @endphp
-                @foreach($orders as $order)
+                @forelse($orders ?? [] as $order)
                 <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors order-row"
-                    data-search="{{ strtolower($order[0] . ' ' . $order[1] . ' ' . $order[2]) }}"
-                    data-division="{{ $order[4] }}"
-                    data-status="{{ $order[9] }}">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">{{ $order[0] }}</td>
+                    data-search="{{ strtolower($order->reference . ' ' . $order->client?->fullName() . ' ' . $order->client?->phone) }}"
+                    data-division="{{ $order->division }}"
+                    data-status="{{ $order->status }}">
+                    <td class="px-5 py-3 font-mono text-xs text-gray-500">{{ $order->reference }}</td>
                     <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">{{ $order[1] }}</div>
-                        <div class="text-xs text-gray-500">{{ $order[2] }}</div>
+                        <div class="font-medium text-gray-900">{{ $order->client?->fullName() ?? 'Walk-in' }}</div>
+                        <div class="text-xs text-gray-500">{{ $order->client?->phone }}</div>
                     </td>
                     <td class="px-5 py-3">
-                        @if($order[4] === 'ames')
+                        @if($order->division === 'ames')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-sky-50 text-sky-700 border border-sky-100">AMES</span>
-                        @elseif($order[4] === 'aphamko')
+                        @elseif($order->division === 'aphamko')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">APHAMKO</span>
-                        @elseif($order[4] === 'asca')
+                        @elseif($order->division === 'asca')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">ASCA</span>
-                        @elseif($order[4] === 'amotech')
+                        @elseif($order->division === 'amotech')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-violet-50 text-violet-700 border border-violet-100">AMOTECH</span>
                         @endif
                     </td>
-                    <td class="px-5 py-3 text-xs text-gray-600 max-w-[200px] truncate" title="{{ $order[5] }}">{{ $order[5] }}</td>
-                    <td class="px-5 py-3 font-semibold text-gray-900">{{ $order[6] }}</td>
-                    <td class="px-5 py-3 text-gray-600">{{ $order[7] }}</td>
-                    <td class="px-5 py-3 text-gray-500 text-xs">{{ $order[8] }}</td>
+                    <td class="px-5 py-3 text-xs text-gray-600 max-w-[200px] truncate" title="{{ $order->items }}">{{ $order->items }}</td>
+                    <td class="px-5 py-3 font-semibold text-gray-900">TSh {{ number_format($order->total) }}</td>
+                    <td class="px-5 py-3 text-gray-600">{{ $order->delivery_to }}</td>
+                    <td class="px-5 py-3 text-gray-500 text-xs">
+                        @if(in_array($order->status, ['delivered']))
+                            {{ $order->eta?->format('M d, Y') }} (Delivered)
+                        @else
+                            {{ $order->eta?->format('M d, Y h:i A') }}
+                        @endif
+                    </td>
                     <td class="px-5 py-3">
-                        @if($order[9] === 'delivered')
+                        @if($order->status === 'delivered')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Delivered</span>
-                        @elseif($order[9] === 'transit')
+                        @elseif($order->status === 'transit')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-sky-50 text-sky-700 border border-sky-100">In Transit</span>
-                        @elseif($order[9] === 'processing')
+                        @elseif($order->status === 'processing')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">Processing</span>
-                        @elseif($order[9] === 'delayed')
+                        @elseif($order->status === 'delayed')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-50 text-red-700 border border-red-100">Delayed</span>
-                        @elseif($order[9] === 'cancelled')
+                        @elseif($order->status === 'cancelled')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-50 text-gray-600 border border-gray-200">Cancelled</span>
                         @endif
                     </td>
@@ -187,12 +179,16 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="9" class="px-5 py-8 text-center text-sm text-gray-400">No orders found</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
     <div class="px-5 py-3 border-t border-gray-100 flex items-center justify-between">
-        <p class="text-xs text-gray-400">Showing <span id="orderCount">10</span> orders</p>
+        <p class="text-xs text-gray-400">Showing <span id="orderCount">{{ count($orders ?? []) }}</span> orders</p>
         <div class="flex items-center gap-1">
             <button class="px-2.5 py-1 text-xs font-medium border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 transition-colors">Previous</button>
             <button class="px-2.5 py-1 text-xs font-medium bg-emerald-600 text-white rounded-lg">1</button>
@@ -202,68 +198,59 @@
 </div>
 
 {{-- Delivery Timeline for Active Orders --}}
-<div class="bg-white rounded-xl border p-5">
+<div class="bg-white rounded-xl border p-5 animate__animated animate__fadeInUp" style="animation-delay: 0.35s">
     <h3 class="text-sm font-semibold text-gray-900 mb-4">Active Deliveries Timeline</h3>
     <div class="space-y-4">
-        {{-- Order 1 --}}
-        <div class="flex items-start gap-4 pb-4 border-b border-gray-100">
+        @forelse(($orders ?? collect([]))->whereIn('status', ['processing','transit','delayed'])->take(3) as $order)
+        @php
+            $statusColor = match($order->status) {
+                'transit' => 'bg-sky-500 border-sky-500',
+                'processing' => 'bg-amber-500 border-amber-500',
+                'delayed' => 'bg-red-500 border-red-500',
+                default => 'bg-emerald-500 border-emerald-500',
+            };
+            $isLast = $loop->last;
+        @endphp
+        <div class="flex items-start gap-4 {{ $isLast ? '' : 'pb-4 border-b border-gray-100' }}">
             <div class="flex flex-col items-center shrink-0">
-                <div class="timeline-dot bg-emerald-500 border-emerald-500"></div>
-                <div class="w-0.5 h-12 bg-emerald-200 mt-1"></div>
+                <div class="timeline-dot {{ $statusColor }}"></div>
+                @if(! $isLast)
+                <div class="w-0.5 h-12 {{ $order->status === 'delayed' ? 'bg-red-200' : 'bg-emerald-200' }} mt-1"></div>
+                @endif
             </div>
             <div class="flex-1 min-w-0">
                 <div class="flex items-center justify-between gap-2 flex-wrap">
-                    <p class="text-sm font-semibold text-gray-900">ORD-2026-001 — Arusha Pharmacy</p>
+                    <p class="text-sm font-semibold text-gray-900">{{ $order->reference }} — {{ $order->client?->fullName() ?? 'Walk-in' }}</p>
+                    @if($order->status === 'transit')
                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-sky-50 text-sky-700 border border-sky-100">In Transit</span>
-                </div>
-                <p class="text-xs text-gray-500 mt-1">APHAMKO — Amoxicillin x500, Paracetamol x300</p>
-                <div class="flex items-center gap-4 mt-2 text-[11px]">
-                    <span class="text-emerald-600 font-medium flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Order Placed</span>
-                    <span class="text-emerald-600 font-medium flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Packed</span>
-                    <span class="text-sky-600 font-medium flex items-center gap-1"><svg class="w-3 h-3 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1"/></svg>Dispatched</span>
-                    <span class="text-gray-400 flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>ETA: Today 5PM</span>
-                </div>
-            </div>
-        </div>
-        {{-- Order 2 --}}
-        <div class="flex items-start gap-4 pb-4 border-b border-gray-100">
-            <div class="flex flex-col items-center shrink-0">
-                <div class="timeline-dot bg-amber-500 border-amber-500"></div>
-                <div class="w-0.5 h-12 bg-gray-200 mt-1"></div>
-            </div>
-            <div class="flex-1 min-w-0">
-                <div class="flex items-center justify-between gap-2 flex-wrap">
-                    <p class="text-sm font-semibold text-gray-900">ORD-2026-003 — Asha Hassan</p>
+                    @elseif($order->status === 'processing')
                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">Processing</span>
-                </div>
-                <p class="text-xs text-gray-500 mt-1">ASCA — Body Jelly x20, Soap x30</p>
-                <div class="flex items-center gap-4 mt-2 text-[11px]">
-                    <span class="text-emerald-600 font-medium flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Order Placed</span>
-                    <span class="text-amber-600 font-medium flex items-center gap-1"><svg class="w-3 h-3 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>Packing</span>
-                    <span class="text-gray-400">Dispatched</span>
-                    <span class="text-gray-400">ETA: Today 3PM</span>
-                </div>
-            </div>
-        </div>
-        {{-- Order 3 --}}
-        <div class="flex items-start gap-4">
-            <div class="flex flex-col items-center shrink-0">
-                <div class="timeline-dot bg-red-500 border-red-500"></div>
-            </div>
-            <div class="flex-1 min-w-0">
-                <div class="flex items-center justify-between gap-2 flex-wrap">
-                    <p class="text-sm font-semibold text-gray-900">ORD-2026-005 — KCMC Hospital</p>
+                    @elseif($order->status === 'delayed')
                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-50 text-red-700 border border-red-100">Delayed</span>
+                    @endif
                 </div>
-                <p class="text-xs text-gray-500 mt-1">AMES — Wheelchairs x5, Patient Beds x3 — Supplier delay</p>
+                <p class="text-xs text-gray-500 mt-1">{{ strtoupper($order->division) }} — {{ $order->items }}</p>
                 <div class="flex items-center gap-4 mt-2 text-[11px]">
                     <span class="text-emerald-600 font-medium flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Order Placed</span>
-                    <span class="text-emerald-600 font-medium flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Packed</span>
-                    <span class="text-red-600 font-medium flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>Supplier Delay</span>
-                    <span class="text-gray-400">ETA: Jul 30</span>
+                    @if($order->status === 'processing')
+                        <span class="text-amber-600 font-medium flex items-center gap-1"><svg class="w-3 h-3 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>Packing</span>
+                        <span class="text-gray-400">Dispatched</span>
+                        <span class="text-gray-400">Delivered</span>
+                    @elseif($order->status === 'transit')
+                        <span class="text-emerald-600 font-medium flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Packed</span>
+                        <span class="text-sky-600 font-medium flex items-center gap-1"><svg class="w-3 h-3 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1"/></svg>Dispatched</span>
+                        <span class="text-gray-400">ETA: {{ $order->eta?->format('M d, h:i A') }}</span>
+                    @elseif($order->status === 'delayed')
+                        <span class="text-emerald-600 font-medium flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Packed</span>
+                        <span class="text-red-600 font-medium flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>Supplier Delay</span>
+                        <span class="text-gray-400">ETA: {{ $order->eta?->format('M d') }}</span>
+                    @endif
                 </div>
             </div>
         </div>
+        @empty
+        <p class="text-sm text-gray-400 text-center py-6">No active deliveries</p>
+        @endforelse
     </div>
 </div>
 
@@ -271,38 +258,8 @@
 
 <script>
 (function() {
-    const rows = Array.from(document.querySelectorAll('.order-row'));
-    const searchInput = document.getElementById('orderSearch');
-    const filterDivision = document.getElementById('filterDivision');
-    const filterStatus = document.getElementById('filterStatus');
     const countEl = document.getElementById('orderCount');
-
-    function applyFilters() {
-        const q = (searchInput.value || '').toLowerCase().trim();
-        const div = filterDivision.value;
-        const status = filterStatus.value;
-        let visible = 0;
-
-        rows.forEach(row => {
-            const matchesSearch = !q || row.dataset.search.includes(q);
-            const matchesDivision = !div || row.dataset.division === div;
-            const matchesStatus = !status || row.dataset.status === status;
-
-            if (matchesSearch && matchesDivision && matchesStatus) {
-                row.style.display = '';
-                visible++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        if (countEl) countEl.textContent = visible;
-    }
-
-    [searchInput, filterDivision, filterStatus].forEach(el => {
-        if (el) el.addEventListener('input', applyFilters);
-        if (el) el.addEventListener('change', applyFilters);
-    });
+    if (countEl) countEl.textContent = document.querySelectorAll('.order-row').length;
 })();
 
 function exportTableToCSV(filename) {
