@@ -107,7 +107,7 @@
 </div>
 
 {{-- Clients Table --}}
-<div class="bg-white rounded-xl border overflow-hidden">
+<div class="bg-white rounded-xl border overflow-hidden animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
             <thead>
@@ -123,37 +123,25 @@
                 </tr>
             </thead>
             <tbody id="clientTableBody">
+                @forelse($clients ?? [] as $client)
                 @php
-                    $clients = [
-                        ['John Doe', '0754 123 456', 'john@email.com', 'patient', 'Physiotherapy', 6, 'Jul 25, 2026', true, 'physiotherapy'],
-                        ['Mary Smith', '0788 654 321', 'mary@email.com', 'patient', 'Physiotherapy', 4, 'Jul 25, 2026', false, 'physiotherapy'],
-                        ['Grace Komba', '0712 987 654', 'grace@email.com', 'patient', 'Physiotherapy', 2, 'Jul 25, 2026', false, 'physiotherapy'],
-                        ['Joseph Mwangi', '0766 345 678', 'joseph@email.com', 'business', 'AMES', 1, 'Jul 25, 2026', false, 'ames'],
-                        ['Asha Hassan', '0744 567 890', 'asha@email.com', 'individual', 'ASCA', 3, 'Jul 25, 2026', true, 'asca'],
-                        ['Peter Joseph', '0733 111 222', 'peter@email.com', 'patient', 'Physiotherapy', 8, 'Jul 24, 2026', true, 'physiotherapy'],
-                        ['Neema Baraka', '0755 333 444', 'neema@email.com', 'patient', 'Physiotherapy', 3, 'Jul 24, 2026', false, 'physiotherapy'],
-                        ['David Wilson', '0766 555 666', 'david@email.com', 'business', 'AMOTECH', 2, 'Jul 23, 2026', false, 'amotech'],
-                        ['Rebecca John', '0788 777 888', 'rebecca@email.com', 'patient', 'Physiotherapy', 5, 'Jul 22, 2026', true, 'physiotherapy'],
-                        ['Frank Mushi', '0712 999 000', 'frank@email.com', 'patient', 'Physiotherapy', 7, 'Jul 20, 2026', true, 'physiotherapy'],
-                        ['Arusha Pharmacy', '0766 444 555', 'orders@arushapharm.co.tz', 'business', 'APHAMKO', 12, 'Jul 24, 2026', true, 'aphamko'],
-                        ['City Clinic', '0755 222 333', 'info@cityclinic.co.tz', 'business', 'AMES', 5, 'Jul 21, 2026', false, 'ames'],
-                    ];
+                    $lastAppt = $client->appointments->sortByDesc('appointment_date')->first();
+                    $lastVisitDate = $lastAppt ? $lastAppt->appointment_date?->format('M d, Y') : '—';
                 @endphp
-                @foreach($clients as $client)
                 <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors client-row"
-                    data-search="{{ strtolower($client[0] . ' ' . $client[1] . ' ' . $client[2]) }}"
-                    data-division="{{ $client[8] }}"
-                    data-type="{{ $client[3] }}">
+                    data-search="{{ strtolower($client->fullName() . ' ' . $client->phone . ' ' . $client->email) }}"
+                    data-division="{{ strtolower($client->division) }}"
+                    data-type="{{ $client->type }}">
                     <td class="px-5 py-3">
                         <div class="flex items-center gap-3">
                             <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold text-xs shrink-0">
-                                {{ strtoupper(substr($client[0], 0, 1)) }}
+                                {{ strtoupper(substr($client->first_name, 0, 1)) }}
                             </div>
                             <div class="min-w-0">
-                                <div class="font-medium text-gray-900 truncate">{{ $client[0] }}</div>
-                                @if($client[3] === 'business')
+                                <div class="font-medium text-gray-900 truncate">{{ $client->fullName() }}</div>
+                                @if($client->type === 'business')
                                 <span class="text-[10px] text-gold-600 font-semibold uppercase tracking-wider">Business</span>
-                                @elseif($client[3] === 'patient')
+                                @elseif($client->type === 'patient')
                                 <span class="text-[10px] text-emerald-600 font-semibold uppercase tracking-wider">Patient</span>
                                 @else
                                 <span class="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Individual</span>
@@ -162,28 +150,28 @@
                         </div>
                     </td>
                     <td class="px-5 py-3">
-                        <div class="text-xs text-gray-600">{{ $client[1] }}</div>
-                        <div class="text-[11px] text-gray-400">{{ $client[2] }}</div>
+                        <div class="text-xs text-gray-600">{{ $client->phone }}</div>
+                        <div class="text-[11px] text-gray-400">{{ $client->email }}</div>
                     </td>
                     <td class="px-5 py-3">
-                        @if($client[3] === 'business')
+                        @if($client->type === 'business')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-gold-50 text-gold-700 border border-gold-100">Business</span>
-                        @elseif($client[3] === 'patient')
+                        @elseif($client->type === 'patient')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Patient</span>
                         @else
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-50 text-gray-600 border border-gray-200">Individual</span>
                         @endif
                     </td>
-                    <td class="px-5 py-3 text-gray-600">{{ $client[4] }}</td>
+                    <td class="px-5 py-3 text-gray-600">{{ $client->division }}</td>
                     <td class="px-5 py-3">
-                        <span class="font-semibold text-gray-900">{{ $client[5] }}</span>
-                        @if($client[5] >= 5)
+                        <span class="font-semibold text-gray-900">{{ $client->appointments_count }}</span>
+                        @if($client->appointments_count >= 5)
                         <span class="ml-1 text-[10px] text-emerald-600 font-medium">Regular</span>
                         @endif
                     </td>
-                    <td class="px-5 py-3 text-gray-500 text-xs">{{ $client[6] }}</td>
+                    <td class="px-5 py-3 text-gray-500 text-xs">{{ $lastVisitDate }}</td>
                     <td class="px-5 py-3">
-                        @if($client[7])
+                        @if($client->appointments_count >= 2)
                         <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-600">
                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                             Repeat
@@ -206,12 +194,16 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="8" class="px-5 py-8 text-center text-sm text-gray-400">No clients found</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
     <div class="px-5 py-3 border-t border-gray-100 flex items-center justify-between">
-        <p class="text-xs text-gray-400">Showing <span id="clientCount">12</span> clients</p>
+        <p class="text-xs text-gray-400">Showing <span id="clientCount">{{ count($clients ?? []) }}</span> clients</p>
         <div class="flex items-center gap-1">
             <button class="px-2.5 py-1 text-xs font-medium border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 transition-colors">Previous</button>
             <button class="px-2.5 py-1 text-xs font-medium bg-emerald-600 text-white rounded-lg">1</button>
@@ -224,38 +216,8 @@
 
 <script>
 (function() {
-    const rows = Array.from(document.querySelectorAll('.client-row'));
-    const searchInput = document.getElementById('clientSearch');
-    const filterDivision = document.getElementById('filterDivision');
-    const filterType = document.getElementById('filterType');
     const countEl = document.getElementById('clientCount');
-
-    function applyFilters() {
-        const q = (searchInput.value || '').toLowerCase().trim();
-        const div = filterDivision.value;
-        const type = filterType.value;
-        let visible = 0;
-
-        rows.forEach(row => {
-            const matchesSearch = !q || row.dataset.search.includes(q);
-            const matchesDivision = !div || row.dataset.division === div;
-            const matchesType = !type || row.dataset.type === type;
-
-            if (matchesSearch && matchesDivision && matchesType) {
-                row.style.display = '';
-                visible++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        if (countEl) countEl.textContent = visible;
-    }
-
-    [searchInput, filterDivision, filterType].forEach(el => {
-        if (el) el.addEventListener('input', applyFilters);
-        if (el) el.addEventListener('change', applyFilters);
-    });
+    if (countEl) countEl.textContent = document.querySelectorAll('.client-row').length;
 })();
 
 function exportTableToCSV(filename) {
