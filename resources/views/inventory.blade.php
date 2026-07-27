@@ -118,76 +118,61 @@
                 </tr>
             </thead>
             <tbody id="invTableBody">
+                @forelse($items ?? [] as $item)
                 @php
-                    $items = [
-                        ['APH-001', 'Amoxicillin 500mg', 'aphamko', 'APHAMKO', 'Medication', 0, 0, 1500, '0/200', 'out', 'MediSupply TZ'],
-                        ['APH-002', 'Paracetamol Syrup', 'aphamko', 'APHAMKO', 'Medication', 0, 0, 2500, '0/100', 'out', 'MediSupply TZ'],
-                        ['APH-003', 'Cough Syrup 100ml', 'aphamko', 'APHAMKO', 'Medication', 85, 200, 3000, '85/200', 'in', 'Pharma Distributors'],
-                        ['APH-004', 'Vitamin C Tablets', 'aphamko', 'APHAMKO', 'Supplements', 320, 500, 1500, '320/500', 'in', 'Pharma Distributors'],
-                        ['APH-005', 'IV Fluids 500ml', 'aphamko', 'APHAMKO', 'Medical Supplies', 15, 100, 4500, '15/100', 'low', 'MediSupply TZ'],
-                        ['AME-001', 'BP Monitor (Digital)', 'ames', 'AMES', 'Equipment', 3, 20, 180000, '3/20', 'low', 'MedEquip Ltd'],
-                        ['AME-002', 'Stethoscope', 'ames', 'AMES', 'Equipment', 45, 50, 45000, '45/50', 'in', 'MedEquip Ltd'],
-                        ['AME-003', 'Wheelchair', 'ames', 'AMES', 'Equipment', 12, 15, 350000, '12/15', 'in', 'MedEquip Ltd'],
-                        ['AME-004', 'Surgical Gloves (Box)', 'ames', 'AMES', 'Consumables', 1200, 2000, 12000, '1200/2000', 'in', 'SafeHands TZ'],
-                        ['AME-005', 'Patient Bed', 'ames', 'AMES', 'Equipment', 0, 10, 850000, '0/10', 'out', 'MedEquip Ltd'],
-                        ['ASC-001', 'Body Jelly 500ml', 'asca', 'ASCA', 'Skincare', 8, 50, 12000, '8/50', 'low', 'ASCA Production'],
-                        ['ASC-002', 'Natural Soap', 'asca', 'ASCA', 'Skincare', 120, 200, 5000, '120/200', 'in', 'ASCA Production'],
-                        ['ASC-003', 'Face Cream 50ml', 'asca', 'ASCA', 'Skincare', 65, 100, 15000, '65/100', 'in', 'ASCA Production'],
-                        ['ASC-004', 'Body Lotion 300ml', 'asca', 'ASCA', 'Skincare', 4, 50, 10000, '4/50', 'low', 'ASCA Production'],
-                        ['AMT-001', 'Web Hosting (Annual)', 'amotech', 'AMOTECH', 'Service', 999, 999, 600000, 'Unlimited', 'in', 'Internal'],
-                        ['AMT-002', 'SSL Certificate', 'amotech', 'AMOTECH', 'Service', 999, 999, 150000, 'Unlimited', 'in', 'Internal'],
-                    ];
+                    $stockStatus = $item->stockStatus(); // out, low, in
+                    $stockPercent = $item->reorder_level > 0 ? min(($item->quantity / $item->reorder_level) * 100, 100) : ($item->quantity > 0 ? 100 : 0);
+                    $qtyLabel = $item->quantity . '/' . $item->reorder_level;
                 @endphp
-                @foreach($items as $item)
                 <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors inv-row"
-                    data-search="{{ strtolower($item[0] . ' ' . $item[1]) }}"
-                    data-division="{{ $item[2] }}"
-                    data-stock="{{ $item[9] }}">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">{{ $item[0] }}</td>
+                    data-search="{{ strtolower($item->sku . ' ' . $item->name) }}"
+                    data-division="{{ $item->division }}"
+                    data-stock="{{ $stockStatus }}">
+                    <td class="px-5 py-3 font-mono text-xs text-gray-500">{{ $item->sku }}</td>
                     <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">{{ $item[1] }}</div>
+                        <div class="font-medium text-gray-900">{{ $item->name }}</div>
                     </td>
                     <td class="px-5 py-3">
-                        @if($item[3] === 'AMES')
+                        @if($item->division === 'ames')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-sky-50 text-sky-700 border border-sky-100">AMES</span>
-                        @elseif($item[3] === 'APHAMKO')
+                        @elseif($item->division === 'aphamko')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">APHAMKO</span>
-                        @elseif($item[3] === 'ASCA')
+                        @elseif($item->division === 'asca')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">ASCA</span>
-                        @elseif($item[3] === 'AMOTECH')
+                        @elseif($item->division === 'amotech')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-violet-50 text-violet-700 border border-violet-100">AMOTECH</span>
                         @endif
                     </td>
-                    <td class="px-5 py-3 text-gray-500 text-xs">{{ $item[4] }}</td>
+                    <td class="px-5 py-3 text-gray-500 text-xs">{{ $item->category }}</td>
                     <td class="px-5 py-3">
-                        @if($item[9] === 'out')
+                        @if($stockStatus === 'out')
                         <div class="flex items-center gap-2">
                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-50 text-red-700 border border-red-100">Out</span>
-                            <span class="text-[10px] text-gray-400">{{ $item[8] }}</span>
+                            <span class="text-[10px] text-gray-400">0/{{ $item->reorder_level }}</span>
                         </div>
-                        @elseif($item[9] === 'low')
+                        @elseif($stockStatus === 'low')
                         <div class="flex items-center gap-2">
                             <div class="w-16">
-                                <div class="stock-bar bg-gray-100"><div class="h-full bg-amber-400" style="width: {{ ($item[5] / max($item[6], 1)) * 100 }}%"></div></div>
+                                <div class="stock-bar bg-gray-100"><div class="h-full bg-amber-400" style="width: {{ $stockPercent }}%"></div></div>
                             </div>
                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">Low</span>
-                            <span class="text-[10px] text-gray-400">{{ $item[8] }}</span>
+                            <span class="text-[10px] text-gray-400">{{ $qtyLabel }}</span>
                         </div>
                         @else
                         <div class="flex items-center gap-2">
                             <div class="w-16">
-                                <div class="stock-bar bg-gray-100"><div class="h-full bg-emerald-500" style="width: {{ min(($item[5] / max($item[6], 1)) * 100, 100) }}%"></div></div>
+                                <div class="stock-bar bg-gray-100"><div class="h-full bg-emerald-500" style="width: {{ $stockPercent }}%"></div></div>
                             </div>
                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">In Stock</span>
-                            <span class="text-[10px] text-gray-400">{{ $item[8] }}</span>
+                            <span class="text-[10px] text-gray-400">{{ $qtyLabel }}</span>
                         </div>
                         @endif
                     </td>
-                    <td class="px-5 py-3 font-semibold text-gray-900">TSh {{ number_format($item[7]) }}</td>
-                    <td class="px-5 py-3 text-gray-500 text-xs">{{ $item[10] }}</td>
+                    <td class="px-5 py-3 font-semibold text-gray-900">TSh {{ number_format($item->unit_price) }}</td>
+                    <td class="px-5 py-3 text-gray-500 text-xs">{{ $item->supplier }}</td>
                     <td class="px-5 py-3 text-right">
                         <div class="inline-flex items-center gap-1">
-                            @if($item[9] !== 'in')
+                            @if($stockStatus !== 'in')
                             <button class="p-1.5 rounded-lg hover:bg-amber-50 text-amber-600 transition-colors" title="Reorder">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                             </button>
@@ -201,12 +186,16 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="8" class="px-5 py-8 text-center text-sm text-gray-400">No inventory items found</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
     <div class="px-5 py-3 border-t border-gray-100 flex items-center justify-between">
-        <p class="text-xs text-gray-400">Showing <span id="invCount">16</span> items</p>
+        <p class="text-xs text-gray-400">Showing <span id="invCount">{{ count($items ?? []) }}</span> items</p>
         <div class="flex items-center gap-1">
             <button class="px-2.5 py-1 text-xs font-medium border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 transition-colors">Previous</button>
             <button class="px-2.5 py-1 text-xs font-medium bg-emerald-600 text-white rounded-lg">1</button>
@@ -219,38 +208,8 @@
 
 <script>
 (function() {
-    const rows = Array.from(document.querySelectorAll('.inv-row'));
-    const searchInput = document.getElementById('invSearch');
-    const filterDivision = document.getElementById('filterDivision');
-    const filterStock = document.getElementById('filterStock');
     const countEl = document.getElementById('invCount');
-
-    function applyFilters() {
-        const q = (searchInput.value || '').toLowerCase().trim();
-        const div = filterDivision.value;
-        const stock = filterStock.value;
-        let visible = 0;
-
-        rows.forEach(row => {
-            const matchesSearch = !q || row.dataset.search.includes(q);
-            const matchesDivision = !div || row.dataset.division === div;
-            const matchesStock = !stock || row.dataset.stock === stock;
-
-            if (matchesSearch && matchesDivision && matchesStock) {
-                row.style.display = '';
-                visible++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        if (countEl) countEl.textContent = visible;
-    }
-
-    [searchInput, filterDivision, filterStock].forEach(el => {
-        if (el) el.addEventListener('input', applyFilters);
-        if (el) el.addEventListener('change', applyFilters);
-    });
+    if (countEl) countEl.textContent = document.querySelectorAll('.inv-row').length;
 })();
 
 function exportTableToCSV(filename) {
