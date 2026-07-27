@@ -1,6 +1,6 @@
 @extends('layouts.landing')
 
-@section('title', config('app.name', 'Amoleck Group Company LTD') . ' — One Group. Many Solutions.')
+@section('title', config('app.name', 'Amoleck Group Company LTD') . ' — Your Health. Our Priority.')
 
 @section('content')
 
@@ -41,13 +41,13 @@
             {{-- Badge --}}
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6 animate-fade-up">
                 <span class="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></span>
-                <span class="text-xs font-semibold text-white tracking-wide">One Group. Many Solutions.</span>
+                <span class="text-xs font-semibold text-white tracking-wide">Your Health. Our Priority.</span>
             </div>
 
             {{-- Headline --}}
             <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight animate-fade-up" style="animation-delay: 0.1s;">
-                One Group.<br>
-                <span class="text-gold-400">Many Solutions.</span>
+                Caring for You,<br>
+                <span class="text-gold-400">Every Step of the Way.</span>
             </h1>
 
             {{-- Subheading --}}
@@ -126,7 +126,7 @@
         {{-- Section Header --}}
         <div class="text-center mb-16">
             <span class="inline-block px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-4">Our Divisions</span>
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">Five Divisions. One Group.</h2>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">Five Divisions. One Mission.</h2>
             <p class="mt-4 text-base sm:text-lg text-gray-500 max-w-2xl mx-auto">Each division is a specialist unit with its own code, its own expertise, and the same commitment to excellence.</p>
         </div>
 
@@ -259,7 +259,7 @@
                     <svg class="w-6 h-6 text-emerald-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                 </div>
                 <h3 class="text-lg font-bold text-gray-900 mb-2">Multi-Sector Strength</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Five specialized divisions under one group means you get comprehensive solutions without dealing with multiple companies.</p>
+                <p class="text-sm text-gray-500 leading-relaxed">Five specialized divisions under one trusted group means you get comprehensive health and business solutions without dealing with multiple companies.</p>
             </div>
 
             {{-- Nationwide --}}
