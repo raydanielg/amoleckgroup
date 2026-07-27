@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Dashboard - ' . config('app.name', 'Amoleck Group Company LTD'))
-@section('page_title', 'Dashboard')
+@section('title', 'Overview - ' . config('app.name', 'Amoleck Group Company LTD'))
+@section('page_title', 'Overview')
 
 @section('content')
 
