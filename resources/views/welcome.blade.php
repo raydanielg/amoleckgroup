@@ -325,65 +325,30 @@
     </div>
 </section>
 
-{{-- =================== 5. APPOINTMENT CTA =================== --}}
-<section id="appointment" class="py-20 sm:py-28 bg-emerald-900 relative overflow-hidden">
-    {{-- Decorative --}}
-    <div class="absolute top-0 right-0 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pulse-glow"></div>
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl pulse-glow"></div>
-    <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px); background-size: 32px 32px;"></div>
-
-    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-            <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            <span class="text-xs font-semibold text-white tracking-wide">Book Appointment</span>
+{{-- =================== 5. APPOINTMENT BOOKING =================== --}}
+<section id="appointment" class="py-20 sm:py-28 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-4">Book Appointment</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">Book Your Appointment</h2>
+            <p class="mt-4 text-base text-gray-500 max-w-xl mx-auto">Simple, fast, and straightforward. Complete the steps below to book your session.</p>
         </div>
-
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
-            Ready to Book Your<br>
-            <span class="text-gold-400">Appointment?</span>
-        </h2>
-
-        <p class="mt-6 text-lg text-emerald-100/70 max-w-2xl mx-auto leading-relaxed">
-            Whether you need physiotherapy, a consultation, or want to learn more about any of our divisions, we're here to help. Book your appointment today.
-        </p>
-
-        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#appointment-form" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-500 hover:bg-gold-600 text-white font-bold rounded-xl transition-colors text-base">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                Book Appointment
-            </a>
-            <a href="tel:+255626371854" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold rounded-xl border border-white/30 transition-colors text-base">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                Call: +255 626 371 854
-            </a>
-        </div>
-
-        {{-- Quick contact info --}}
-        <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
-            <div class="text-center">
-                <div class="w-12 h-12 mx-auto rounded-xl bg-white/10 flex items-center justify-center mb-3">
-                    <svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            {{-- Progress Bar --}}
+            <div class="px-6 sm:px-8 pt-6 pb-4 border-b border-gray-100">
+                <div id="stepIndicator" class="flex items-center w-full">
+                    <div class="flex items-center flex-1"><div class="step-dot w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-bold shrink-0" data-step="1">1</div><div class="step-line flex-1 h-0.5 mx-2 bg-gray-200" data-line="1"></div></div>
+                    <div class="flex items-center flex-1"><div class="step-dot w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-sm font-bold shrink-0" data-step="2">2</div><div class="step-line flex-1 h-0.5 mx-2 bg-gray-200" data-line="2"></div></div>
+                    <div class="flex items-center flex-1"><div class="step-dot w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-sm font-bold shrink-0" data-step="3">3</div><div class="step-line flex-1 h-0.5 mx-2 bg-gray-200" data-line="3"></div></div>
+                    <div class="flex items-center flex-1"><div class="step-dot w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-sm font-bold shrink-0" data-step="4">4</div><div class="step-line flex-1 h-0.5 mx-2 bg-gray-200" data-line="4"></div></div>
+                    <div class="step-dot w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-sm font-bold shrink-0" data-step="5">5</div>
                 </div>
-                <p class="text-sm font-semibold text-white">Phone</p>
-                <p class="text-xs text-emerald-200/60 mt-1">+255 626 371 854</p>
-            </div>
-            <div class="text-center">
-                <div class="w-12 h-12 mx-auto rounded-xl bg-white/10 flex items-center justify-center mb-3">
-                    <svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v6a2 2 0 01-2 2h-1m-4-4a4 4 0 11-8 0 4 4 0 018 0zm-4 4a2 2 0 100-4 2 2 0 000 4z"/></svg>
+                <div class="flex justify-between mt-2 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+                    <span class="flex-1 text-center">Service</span><span class="flex-1 text-center">Care Type</span><span class="flex-1 text-center">Date & Time</span><span class="flex-1 text-center">Details</span><span class="text-center">Confirm</span>
                 </div>
-                <p class="text-sm font-semibold text-white">Instagram</p>
-                <p class="text-xs text-emerald-200/60 mt-1">@amoleck_group</p>
             </div>
-            <div class="text-center">
-                <div class="w-12 h-12 mx-auto rounded-xl bg-white/10 flex items-center justify-center mb-3">
-                    <svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1"/></svg>
-                </div>
-                <p class="text-sm font-semibold text-white">Delivery</p>
-                <p class="text-xs text-emerald-200/60 mt-1">All of Tanzania</p>
-            </div>
-        </div>
-    </div>
-</section>
+            {{-- Form Body --}}
+            <div class="p-6 sm:p-8">
 
 {{-- =================== 6. CONTACT / FOOTER =================== --}}
 {{-- Footer is in layouts/landing.blade.php with id="contact" --}}
