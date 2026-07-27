@@ -85,14 +85,16 @@ class DashboardController extends Controller
 
     public function clients(Request $request)
     {
-        $query = Client::withCount(['appointments', 'orders'])->latest();
+        $query = Client::withCount(['appointments', 'orders'])
+            ->with(['appointments' => function ($q) { $q->orderBy('appointment_date', 'desc'); }, 'orders'])
+            ->latest();
 
         if ($request->filled('type')) {
             $query->where('type', $request->type);
         }
 
         if ($request->filled('division')) {
-            $query->where('division', 'like', '%' . ucfirst($request->division) . '%');
+            $query->whereRaw('LOWER(division) = ?', [strtolower($request->division)]);
         }
 
         if ($request->filled('search')) {
