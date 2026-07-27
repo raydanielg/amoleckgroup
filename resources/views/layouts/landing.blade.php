@@ -141,7 +141,7 @@
                 {{-- Right Actions --}}
                 <div class="flex items-center gap-3">
                     <a href="{{ route('login') }}" class="hidden sm:inline-block text-sm font-semibold text-white/80 hover:text-white transition-colors">Login</a>
-                    <a href="#appointment" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-gold-500 hover:bg-gold-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-gold-500/30 transition-all hover:scale-105">
+                    <a href="#appointment" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-gold-500 hover:bg-gold-600 text-white text-sm font-bold rounded-xl transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         Book Appointment
                     </a>
