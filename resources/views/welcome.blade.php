@@ -333,7 +333,7 @@
         </p>
 
         <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#appointment-form" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-500 hover:bg-gold-600 text-white font-bold rounded-xl shadow-xl shadow-gold-500/30 transition-all hover:scale-105 text-base">
+            <a href="#appointment-form" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-500 hover:bg-gold-600 text-white font-bold rounded-xl transition-colors text-base">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 Book Appointment
             </a>
