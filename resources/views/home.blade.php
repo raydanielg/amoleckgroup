@@ -16,7 +16,7 @@
 </style>
 
 {{-- Welcome --}}
-<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap">
+<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap animate__animated animate__fadeInDown">
     <div class="min-w-0">
         <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 tracking-tight">Hello {{ $firstName }} 👋</h1>
         <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Here's what needs your attention today.</p>
@@ -36,46 +36,46 @@
 {{-- Stats Cards --}}
 <div class="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4 mb-6">
     {{-- Today's Appointments --}}
-    <div class="card-sm bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl border border-emerald-500 p-3 sm:p-5 text-white relative overflow-hidden">
+    <div class="card-sm bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl border border-emerald-500 p-3 sm:p-5 text-white relative overflow-hidden animate__animated animate__fadeInUp" style="animation-delay: 0.05s">
         <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10"></div>
         <div class="flex items-start justify-between relative z-10">
             <span class="text-[10px] sm:text-xs font-medium text-emerald-100">Today's Appointments</span>
             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         </div>
-        <div class="mt-2 sm:mt-3 text-xl sm:text-3xl font-bold tracking-tight text-white relative z-10">8</div>
-        <div class="mt-1 text-[10px] sm:text-xs text-emerald-200 font-medium relative z-10">2 pending confirmation</div>
+        <div class="mt-2 sm:mt-3 text-xl sm:text-3xl font-bold tracking-tight text-white relative z-10">{{ $todayAppointments ?? 0 }}</div>
+        <div class="mt-1 text-[10px] sm:text-xs text-emerald-200 font-medium relative z-10">{{ $newBookings ?? 0 }} pending confirmation</div>
     </div>
 
     {{-- New Bookings --}}
-    <div class="card-sm bg-gradient-to-br from-gold-400 to-gold-500 rounded-xl border border-gold-300 p-3 sm:p-5 text-white relative overflow-hidden">
+    <div class="card-sm bg-gradient-to-br from-gold-400 to-gold-500 rounded-xl border border-gold-300 p-3 sm:p-5 text-white relative overflow-hidden animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
         <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10"></div>
         <div class="flex items-start justify-between relative z-10">
             <span class="text-[10px] sm:text-xs font-medium text-gold-50">New Bookings</span>
             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5"/></svg>
         </div>
-        <div class="mt-2 sm:mt-3 text-xl sm:text-3xl font-bold tracking-tight text-white relative z-10">3</div>
+        <div class="mt-2 sm:mt-3 text-xl sm:text-3xl font-bold tracking-tight text-white relative z-10">{{ $newBookings ?? 0 }}</div>
         <div class="mt-1 text-[10px] sm:text-xs text-gold-50 font-medium relative z-10">Waiting for response</div>
     </div>
 
     {{-- Revenue This Month --}}
-    <div class="card-sm bg-gradient-to-br from-sky-500 to-sky-600 rounded-xl border border-sky-400 p-3 sm:p-5 text-white relative overflow-hidden">
+    <div class="card-sm bg-gradient-to-br from-sky-500 to-sky-600 rounded-xl border border-sky-400 p-3 sm:p-5 text-white relative overflow-hidden animate__animated animate__fadeInUp" style="animation-delay: 0.15s">
         <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10"></div>
         <div class="flex items-start justify-between relative z-10">
             <span class="text-[10px] sm:text-xs font-medium text-sky-100">Revenue (Month)</span>
             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
-        <div class="mt-2 sm:mt-3 text-xl sm:text-3xl font-bold tracking-tight text-white relative z-10">TSh 12.8M</div>
+        <div class="mt-2 sm:mt-3 text-xl sm:text-3xl font-bold tracking-tight text-white relative z-10">TSh {{ number_format(($monthlyRevenue ?? 0) / 1000000, 1) }}M</div>
         <div class="mt-1 text-[10px] sm:text-xs text-sky-100 font-medium relative z-10">+8% vs last month</div>
     </div>
 
     {{-- Pending Orders --}}
-    <div class="card-sm bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl border border-violet-400 p-3 sm:p-5 text-white relative overflow-hidden">
+    <div class="card-sm bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl border border-violet-400 p-3 sm:p-5 text-white relative overflow-hidden animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
         <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10"></div>
         <div class="flex items-start justify-between relative z-10">
             <span class="text-[10px] sm:text-xs font-medium text-violet-100">Pending Orders</span>
             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1"/></svg>
         </div>
-        <div class="mt-2 sm:mt-3 text-xl sm:text-3xl font-bold tracking-tight text-white relative z-10">5</div>
+        <div class="mt-2 sm:mt-3 text-xl sm:text-3xl font-bold tracking-tight text-white relative z-10">{{ $pendingOrders ?? 0 }}</div>
         <div class="mt-1 text-[10px] sm:text-xs text-violet-100 font-medium relative z-10">2 dispatches due today</div>
     </div>
 </div>
