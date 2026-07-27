@@ -586,4 +586,228 @@
 })();
 </script>
 
+{{-- Booking Form Script --}}
+<script>
+(function() {
+    let currentStep = 1;
+    const totalSteps = 5;
+    const steps = document.querySelectorAll('.booking-step');
+    const dots = document.querySelectorAll('.step-dot');
+    const lines = document.querySelectorAll('.step-line');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const btnConfirm = document.getElementById('btnConfirm');
+    const bookingNav = document.getElementById('bookingNav');
+    let selectedTime = '';
+
+    function showStep(n) {
+        steps.forEach(s => s.classList.add('hidden'));
+        const el = document.getElementById('step' + n);
+        if (el) el.classList.remove('hidden');
+
+        dots.forEach(d => {
+            const step = parseInt(d.dataset.step);
+            d.className = d.className.replace(/bg-(emerald-600|gray-200)\s+(text-(white|gray-500))/, '').trim();
+            if (step <= n) {
+                d.classList.add('bg-emerald-600', 'text-white');
+            } else {
+                d.classList.add('bg-gray-200', 'text-gray-500');
+            }
+        });
+
+        lines.forEach(l => {
+            const line = parseInt(l.dataset.line);
+            if (line < n) {
+                l.classList.remove('bg-gray-200');
+                l.classList.add('bg-emerald-600');
+            } else {
+                l.classList.remove('bg-emerald-600');
+                l.classList.add('bg-gray-200');
+            }
+        });
+
+        btnPrev.disabled = (n === 1);
+        if (n === totalSteps) {
+            btnNext.classList.add('hidden');
+            btnConfirm.classList.remove('hidden');
+            fillReview();
+        } else {
+            btnNext.classList.remove('hidden');
+            btnConfirm.classList.add('hidden');
+        }
+
+        currentStep = n;
+    }
+
+    function validateStep(n) {
+        if (n === 1) {
+            const service = document.querySelector('input[name="service"]:checked');
+            if (!service) { showToast('Please choose a service', 'error'); return false; }
+            if (service.value === 'Division Enquiry') {
+                const div = document.getElementById('divisionSelect');
+                if (!div.value) { showToast('Please select a division', 'error'); return false; }
+            }
+        }
+        if (n === 2) {
+            const care = document.querySelector('input[name="careType"]:checked');
+            if (!care) { showToast('Please choose a care type', 'error'); return false; }
+            if (care.value === 'Home Visit') {
+                const addr = document.getElementById('homeAddress');
+                if (!addr.value.trim()) { showToast('Please enter your location/address', 'error'); return false; }
+            }
+            if (care.value === 'Clinic-Based') {
+                const clinic = document.getElementById('clinicSelect');
+                if (!clinic.value) { showToast('Please select a clinic', 'error'); return false; }
+            }
+        }
+        if (n === 3) {
+            const date = document.getElementById('bookingDate');
+            if (!date.value) { showToast('Please select a date', 'error'); return false; }
+            if (!selectedTime) { showToast('Please select a time slot', 'error'); return false; }
+        }
+        if (n === 4) {
+            const name = document.getElementById('patientName');
+            const phone = document.getElementById('patientPhone');
+            const desc = document.getElementById('problemDesc');
+            if (!name.value.trim()) { showToast('Please enter your full name', 'error'); return false; }
+            if (!phone.value.trim()) { showToast('Please enter your phone number', 'error'); return false; }
+            if (!desc.value.trim()) { showToast('Please describe your problem or need', 'error'); return false; }
+        }
+        return true;
+    }
+
+    function fillReview() {
+        const service = document.querySelector('input[name="service"]:checked');
+        const care = document.querySelector('input[name="careType"]:checked');
+        const date = document.getElementById('bookingDate');
+        const name = document.getElementById('patientName');
+        const phone = document.getElementById('patientPhone');
+        const desc = document.getElementById('problemDesc');
+
+        let serviceVal = service ? service.value : '';
+        if (service && service.value === 'Division Enquiry') {
+            const div = document.getElementById('divisionSelect');
+            serviceVal = div.value || 'Division Enquiry';
+        }
+
+        let location = '';
+        if (care) {
+            if (care.value === 'Home Visit') {
+                location = document.getElementById('homeAddress').value;
+            } else {
+                location = document.getElementById('clinicSelect').value;
+            }
+        }
+
+        document.getElementById('reviewService').textContent = serviceVal;
+        document.getElementById('reviewCareType').textContent = care ? care.value : '';
+        document.getElementById('reviewLocation').textContent = location;
+        document.getElementById('reviewDate').textContent = date.value ? new Date(date.value).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+        document.getElementById('reviewTime').textContent = selectedTime;
+        document.getElementById('reviewName').textContent = name.value;
+        document.getElementById('reviewPhone').textContent = phone.value;
+        document.getElementById('reviewDesc').textContent = desc.value;
+    }
+
+    function showToast(msg, type) {
+        if (typeof Toastify !== 'undefined') {
+            Toastify({ text: msg, duration: 3000, gravity: 'top', position: 'center', style: { background: type === 'error' ? '#e11d48' : '#024938' } }).showToast();
+        } else {
+            alert(msg);
+        }
+    }
+
+    function generateRef() {
+        const num = Math.floor(100 + Math.random() * 900);
+        return 'AMO-2026-' + num;
+    }
+
+    // Navigation
+    btnNext.addEventListener('click', function() {
+        if (validateStep(currentStep)) {
+            if (currentStep < totalSteps) showStep(currentStep + 1);
+        }
+    });
+
+    btnPrev.addEventListener('click', function() {
+        if (currentStep > 1) showStep(currentStep - 1);
+    });
+
+    btnConfirm.addEventListener('click', function() {
+        // Generate reference and show success
+        document.getElementById('refNumber').textContent = generateRef();
+        steps.forEach(s => s.classList.add('hidden'));
+        document.getElementById('bookingSuccess').classList.remove('hidden');
+        bookingNav.classList.add('hidden');
+        if (typeof Toastify !== 'undefined') {
+            Toastify({ text: 'Booking confirmed successfully!', duration: 4000, gravity: 'top', position: 'center', style: { background: '#024938' } }).showToast();
+        }
+    });
+
+    // Reset
+    document.getElementById('resetBooking').addEventListener('click', function() {
+        document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        document.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], input[type="number"], textarea').forEach(i => i.value = '');
+        document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+        document.getElementById('bookingDate').value = '';
+        selectedTime = '';
+        document.querySelectorAll('.time-slot').forEach(t => {
+            if (!t.disabled) {
+                t.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+                t.classList.add('border-gray-200');
+            }
+        });
+        document.getElementById('divisionSelect').classList.add('hidden');
+        document.getElementById('homeAddress').classList.add('hidden');
+        document.getElementById('clinicSelect').classList.add('hidden');
+        document.getElementById('bookingSuccess').classList.add('hidden');
+        bookingNav.classList.remove('hidden');
+        showStep(1);
+    });
+
+    // Division select show/hide
+    document.getElementById('divisionRadio').addEventListener('change', function() {
+        document.getElementById('divisionSelect').classList.remove('hidden');
+    });
+    document.querySelectorAll('input[name="service"]').forEach(r => {
+        if (r.id !== 'divisionRadio') {
+            r.addEventListener('change', function() {
+                document.getElementById('divisionSelect').classList.add('hidden');
+            });
+        }
+    });
+
+    // Home visit / clinic select show/hide
+    document.getElementById('homeRadio').addEventListener('change', function() {
+        document.getElementById('homeAddress').classList.remove('hidden');
+        document.getElementById('clinicSelect').classList.add('hidden');
+    });
+    document.getElementById('clinicRadio').addEventListener('change', function() {
+        document.getElementById('clinicSelect').classList.remove('hidden');
+        document.getElementById('homeAddress').classList.add('hidden');
+    });
+
+    // Time slot selection
+    document.querySelectorAll('.time-slot').forEach(slot => {
+        if (!slot.disabled) {
+            slot.addEventListener('click', function() {
+                document.querySelectorAll('.time-slot').forEach(t => {
+                    if (!t.disabled) {
+                        t.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+                        t.classList.add('border-gray-200');
+                    }
+                });
+                slot.classList.remove('border-gray-200');
+                slot.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+                selectedTime = slot.dataset.time;
+            });
+        }
+    });
+
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('bookingDate').min = today;
+})();
+</script>
+
 @endsection
