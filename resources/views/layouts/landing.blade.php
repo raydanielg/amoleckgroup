@@ -11,9 +11,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('amock_big_logo.png') }}">
     <link rel="shortcut icon" href="{{ asset('amock_big_logo.png') }}">
 
-    <meta name="description" content="Amoleck Group Company LTD — One Group. Many Solutions. Medical equipment, pharmaceuticals, skincare, physiotherapy, and technology services across Tanzania.">
+    <meta name="description" content="Amoleck Group Company LTD — Your Health. Our Priority. Medical equipment, pharmaceuticals, skincare, physiotherapy, and technology services across Tanzania.">
     <meta property="og:title" content="{{ config('app.name', 'Amoleck Group Company LTD') }}">
-    <meta property="og:description" content="One Group. Many Solutions.">
+    <meta property="og:description" content="Your Health. Our Priority.">
     <meta property="og:image" content="{{ asset('amock_big_logo.png') }}">
     <meta property="og:type" content="website">
 
@@ -253,7 +253,7 @@
             {{-- Bottom Bar --}}
             <div class="mt-12 pt-8 border-t border-emerald-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p class="text-xs text-emerald-300/60">&copy; {{ date('Y') }} Amoleck Group Company LTD. All rights reserved.</p>
-                <p class="text-xs text-emerald-300/40">One Group. Many Solutions.</p>
+                <p class="text-xs text-emerald-300/40">Your Health. Our Priority.</p>
             </div>
         </div>
     </footer>
