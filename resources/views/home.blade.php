@@ -218,7 +218,7 @@
     </div>
 
     {{-- Low Stock Alerts --}}
-    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700 p-5 text-white">
+    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-gray-700 p-5 text-white animate__animated animate__fadeInUp" style="animation-delay: 0.45s">
         <div class="flex items-center gap-2 mb-4">
             <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
                 <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
@@ -226,41 +226,28 @@
             <h3 class="text-sm font-semibold text-white">Low Stock Alerts</h3>
         </div>
         <div class="space-y-3">
+            @forelse($lowStockItems ?? [] as $item)
             <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/5">
                 <div class="min-w-0">
-                    <p class="text-xs font-semibold text-white truncate">Amoxicillin 500mg</p>
-                    <p class="text-[10px] text-gray-400">APHAMKO</p>
+                    <p class="text-xs font-semibold text-white truncate">{{ $item->name }}</p>
+                    <p class="text-[10px] text-gray-400">{{ strtoupper($item->division) }}</p>
                 </div>
+                @if($item->quantity <= 0)
                 <span class="px-2 py-0.5 bg-red-500/20 text-red-300 text-[10px] font-bold rounded-md">Out</span>
-            </div>
-            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/5">
-                <div class="min-w-0">
-                    <p class="text-xs font-semibold text-white truncate">Paracetamol Syrup</p>
-                    <p class="text-[10px] text-gray-400">APHAMKO</p>
-                </div>
-                <span class="px-2 py-0.5 bg-red-500/20 text-red-300 text-[10px] font-bold rounded-md">Out</span>
-            </div>
-            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/5">
-                <div class="min-w-0">
-                    <p class="text-xs font-semibold text-white truncate">BP Monitor (Digital)</p>
-                    <p class="text-[10px] text-gray-400">AMES</p>
-                </div>
+                @else
                 <span class="px-2 py-0.5 bg-amber-500/20 text-amber-300 text-[10px] font-bold rounded-md">Low</span>
+                @endif
             </div>
-            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/5">
-                <div class="min-w-0">
-                    <p class="text-xs font-semibold text-white truncate">Body Jelly (500ml)</p>
-                    <p class="text-[10px] text-gray-400">ASCA</p>
-                </div>
-                <span class="px-2 py-0.5 bg-amber-500/20 text-amber-300 text-[10px] font-bold rounded-md">Low</span>
-            </div>
+            @empty
+            <p class="text-sm text-gray-400 text-center py-4">No stock alerts</p>
+            @endforelse
         </div>
-        <a href="#" class="mt-4 block text-center text-[11px] font-medium text-gold-400 hover:text-gold-300 transition-colors">View all inventory →</a>
+        <a href="{{ route('inventory.index') }}" class="mt-4 block text-center text-[11px] font-medium text-gold-400 hover:text-gold-300 transition-colors">View all inventory →</a>
     </div>
 </div>
 
 {{-- Today's Appointments Table --}}
-<div class="bg-white rounded-xl border overflow-hidden">
+<div class="bg-white rounded-xl border overflow-hidden animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b px-5 py-4 gap-3">
         <div>
             <h3 class="text-sm font-semibold text-gray-900">Today's Appointments</h3>
@@ -276,9 +263,9 @@
         </div>
     </div>
     <div class="overflow-x-auto">
-        <table class="w-full text-sm">
+        <table class="w-full text-sm" id="appointmentsTable">
             <thead>
-                <tr class="text-left text-xs text-gray-500">
+                <tr class="text-left text-xs text-gray-500 border-b">
                     <th class="px-5 py-3 font-medium">Ref</th>
                     <th class="px-5 py-3 font-medium">Patient</th>
                     <th class="px-5 py-3 font-medium">Service</th>
@@ -288,71 +275,41 @@
                 </tr>
             </thead>
             <tbody id="activityTableBody">
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 09:00') }}" data-search-text="amo-2026-001 john doe physiotherapy home visit confirmed">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-001</td>
+                @forelse($appointments ?? [] as $appt)
+                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row"
+                    data-timestamp="{{ $appt->appointment_date?->timestamp ?? 0 }}"
+                    data-search-text="{{ strtolower($appt->reference . ' ' . $appt->client?->fullName() . ' ' . $appt->service . ' ' . $appt->care_type . ' ' . $appt->status) }}">
+                    <td class="px-5 py-3 font-mono text-xs text-gray-500">{{ $appt->reference }}</td>
                     <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">John Doe</div>
-                        <div class="text-xs text-gray-500">0754 123 456</div>
+                        <div class="font-medium text-gray-900">{{ $appt->client?->fullName() ?? 'Unknown' }}</div>
+                        <div class="text-xs text-gray-500">{{ $appt->client?->phone }}</div>
                     </td>
-                    <td class="px-5 py-3 text-gray-500">Physiotherapy</td>
-                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/></svg>Home Visit</span></td>
-                    <td class="px-5 py-3 text-gray-500">09:00 AM</td>
+                    <td class="px-5 py-3 text-gray-500 capitalize">{{ str_replace('_', ' ', $appt->service) }}</td>
                     <td class="px-5 py-3">
+                        @if($appt->care_type === 'home')
+                        <span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/></svg>Home Visit</span>
+                        @else
+                        <span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg>Clinic</span>
+                        @endif
+                    </td>
+                    <td class="px-5 py-3 text-gray-500">{{ $appt->appointment_time?->format('h:i A') }}</td>
+                    <td class="px-5 py-3">
+                        @if($appt->status === 'confirmed')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Confirmed</span>
-                    </td>
-                </tr>
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 10:30') }}" data-search-text="amo-2026-002 mary smith physiotherapy clinic confirmed">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-002</td>
-                    <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">Mary Smith</div>
-                        <div class="text-xs text-gray-500">0788 654 321</div>
-                    </td>
-                    <td class="px-5 py-3 text-gray-500">Physiotherapy</td>
-                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg>Clinic</span></td>
-                    <td class="px-5 py-3 text-gray-500">10:30 AM</td>
-                    <td class="px-5 py-3">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Confirmed</span>
-                    </td>
-                </tr>
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 14:00') }}" data-search-text="amo-2026-003 grace komba physiotherapy home pending">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-003</td>
-                    <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">Grace Komba</div>
-                        <div class="text-xs text-gray-500">0712 987 654</div>
-                    </td>
-                    <td class="px-5 py-3 text-gray-500">Physiotherapy</td>
-                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3"/></svg>Home Visit</span></td>
-                    <td class="px-5 py-3 text-gray-500">02:00 PM</td>
-                    <td class="px-5 py-3">
+                        @elseif($appt->status === 'pending')
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">Pending</span>
+                        @elseif($appt->status === 'completed')
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-violet-50 text-violet-700 border border-violet-100">Completed</span>
+                        @else
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-50 text-red-700 border border-red-100">{{ ucfirst($appt->status) }}</span>
+                        @endif
                     </td>
                 </tr>
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 15:30') }}" data-search-text="amo-2026-004 joseph mwangi ames equipment enquiry confirmed">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-004</td>
-                    <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">Joseph Mwangi</div>
-                        <div class="text-xs text-gray-500">0766 345 678</div>
-                    </td>
-                    <td class="px-5 py-3 text-gray-500">AMES Enquiry</td>
-                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5"/></svg>Clinic</span></td>
-                    <td class="px-5 py-3 text-gray-500">03:30 PM</td>
-                    <td class="px-5 py-3">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Confirmed</span>
-                    </td>
+                @empty
+                <tr>
+                    <td colspan="6" class="px-5 py-8 text-center text-sm text-gray-400">No appointments for the selected period</td>
                 </tr>
-                <tr class="border-t border-gray-100 hover:bg-gray-50/50 transition-colors tx-row" data-timestamp="{{ strtotime('today 16:00') }}" data-search-text="amo-2026-005 asha hassan asca skincare consultation pending">
-                    <td class="px-5 py-3 font-mono text-xs text-gray-500">AMO-2026-005</td>
-                    <td class="px-5 py-3">
-                        <div class="font-medium text-gray-900">Asha Hassan</div>
-                        <div class="text-xs text-gray-500">0744 567 890</div>
-                    </td>
-                    <td class="px-5 py-3 text-gray-500">ASCA Consult</td>
-                    <td class="px-5 py-3"><span class="inline-flex items-center gap-1 text-xs text-gray-600"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5"/></svg>Clinic</span></td>
-                    <td class="px-5 py-3 text-gray-500">04:00 PM</td>
-                    <td class="px-5 py-3">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">Pending</span>
-                    </td>
-                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
