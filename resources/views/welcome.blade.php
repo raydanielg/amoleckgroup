@@ -55,13 +55,20 @@
                 Amoleck Group Company LTD brings together medical equipment, pharmaceuticals, natural skincare, physiotherapy, and technology — one trusted group serving all of Tanzania.
             </p>
 
+            {{-- Slide Caption --}}
+            <div id="heroCaption" class="mt-4 min-h-[3rem] animate-fade-up" style="animation-delay: 0.25s;">
+                <p class="hero-caption-text text-base sm:text-lg text-gold-300 font-semibold transition-opacity duration-700">
+                    Professional physiotherapy — restoring movement, relieving pain.
+                </p>
+            </div>
+
             {{-- Buttons --}}
             <div class="mt-8 flex flex-col sm:flex-row gap-4 animate-fade-up" style="animation-delay: 0.3s;">
-                <a href="#appointment" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-500 hover:bg-gold-600 text-white font-bold rounded-xl shadow-xl shadow-gold-500/30 transition-all hover:scale-105 text-base">
+                <a href="#appointment" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-500 hover:bg-gold-600 text-white font-bold rounded-xl transition-colors text-base">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     Book Appointment
                 </a>
-                <a href="#divisions" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold rounded-xl border border-white/30 transition-all hover:scale-105 text-base">
+                <a href="#divisions" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold rounded-xl border border-white/30 transition-colors text-base">
                     Explore Divisions
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </a>
@@ -385,6 +392,39 @@
             if (i === idx) { d.classList.add('w-6'); d.classList.remove('w-2.5'); }
             else { d.classList.add('w-2.5'); d.classList.remove('w-6'); }
         });
+        current = idx;
+    }
+
+    const captions = [
+        'Professional physiotherapy — restoring movement, relieving pain.',
+        'Quality medical equipment for hospitals, clinics, and home care.',
+        'Wholesale pharmaceuticals delivered nationwide, every day.',
+        'Natural skincare products, customized for your skin type.',
+        'Expert physiotherapy at home or in our clinic — free counselling.',
+        'Trusted health solutions for individuals and businesses alike.',
+        'Treating back pain, neck pain, joint pain, and recovery with care.',
+        'One trusted group — serving all of Tanzania with excellence.'
+    ];
+    const captionEl = document.querySelector('.hero-caption-text');
+
+    function showSlide(idx) {
+        slides.forEach((s, i) => {
+            s.classList.toggle('opacity-100', i === idx);
+            s.classList.toggle('opacity-0', i !== idx);
+        });
+        dots.forEach((d, i) => {
+            d.className = d.className.replace(/bg-white\/(80|30)/, '').trim();
+            d.classList.add(i === idx ? 'bg-white/80' : 'bg-white/30');
+            if (i === idx) { d.classList.add('w-6'); d.classList.remove('w-2.5'); }
+            else { d.classList.add('w-2.5'); d.classList.remove('w-6'); }
+        });
+        if (captionEl) {
+            captionEl.style.opacity = '0';
+            setTimeout(() => {
+                captionEl.textContent = captions[idx] || '';
+                captionEl.style.opacity = '1';
+            }, 400);
+        }
         current = idx;
     }
 
