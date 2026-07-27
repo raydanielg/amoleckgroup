@@ -38,4 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/clients', function () {
         return view('clients');
     })->name('clients.index');
+
+    Route::get('/orders', function () {
+        return view('orders');
+    })->name('orders.index');
+
+    Route::get('/inventory', function () {
+        return view('inventory');
+    })->name('inventory.index');
 });
