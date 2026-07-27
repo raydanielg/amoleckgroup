@@ -16,7 +16,7 @@
 </style>
 
 {{-- Header --}}
-<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap">
+<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap animate__animated animate__fadeInDown">
     <div class="min-w-0">
         <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 tracking-tight">Clients / Patients</h1>
         <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Manage all client profiles and history</p>
@@ -35,74 +35,75 @@
 
 {{-- Quick Stats --}}
 <div class="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4 mb-6">
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.05s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Total Clients</p>
-                <p class="text-xl font-bold text-gray-900">142</p>
+                <p class="text-xl font-bold text-gray-900">{{ $total ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-gold-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">New This Month</p>
-                <p class="text-xl font-bold text-gray-900">18</p>
+                <p class="text-xl font-bold text-gray-900">{{ $newThisMonth ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.15s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Repeat Clients</p>
-                <p class="text-xl font-bold text-gray-900">47</p>
+                <p class="text-xl font-bold text-gray-900">{{ $repeat ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Follow-ups Due</p>
-                <p class="text-xl font-bold text-gray-900">5</p>
+                <p class="text-xl font-bold text-gray-900">{{ $followUps ?? 0 }}</p>
             </div>
         </div>
     </div>
 </div>
 
 {{-- Search & Filters --}}
-<div class="bg-white rounded-xl border p-4 mb-6">
-    <div class="flex flex-col sm:flex-row gap-3">
+<div class="bg-white rounded-xl border p-4 mb-6 animate__animated animate__fadeInUp" style="animation-delay: 0.25s">
+    <form class="flex flex-col sm:flex-row gap-3" method="GET" action="{{ route('clients.index') }}">
         <div class="flex-1 relative">
             <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="clientSearch" placeholder="Search by name, phone, or email..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name, phone, or email..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all">
         </div>
-        <select id="filterDivision" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
+        <select name="division" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
             <option value="">All Divisions</option>
-            <option value="physiotherapy">Physiotherapy</option>
-            <option value="ames">AMES</option>
-            <option value="aphamko">APHAMKO</option>
-            <option value="asca">ASCA</option>
-            <option value="amotech">AMOTECH</option>
+            <option value="physiotherapy" {{ request('division') === 'physiotherapy' ? 'selected' : '' }}>Physiotherapy</option>
+            <option value="ames" {{ request('division') === 'ames' ? 'selected' : '' }}>AMES</option>
+            <option value="aphamko" {{ request('division') === 'aphamko' ? 'selected' : '' }}>APHAMKO</option>
+            <option value="asca" {{ request('division') === 'asca' ? 'selected' : '' }}>ASCA</option>
+            <option value="amotech" {{ request('division') === 'amotech' ? 'selected' : '' }}>AMOTECH</option>
         </select>
-        <select id="filterType" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
+        <select name="type" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
             <option value="">All Types</option>
-            <option value="patient">Patient</option>
-            <option value="business">Business</option>
-            <option value="individual">Individual</option>
+            <option value="patient" {{ request('type') === 'patient' ? 'selected' : '' }}>Patient</option>
+            <option value="business" {{ request('type') === 'business' ? 'selected' : '' }}>Business</option>
+            <option value="individual" {{ request('type') === 'individual' ? 'selected' : '' }}>Individual</option>
         </select>
-    </div>
+        <button type="submit" class="px-3 py-2 text-sm font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">Filter</button>
+    </form>
 </div>
 
 {{-- Clients Table --}}
