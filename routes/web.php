@@ -28,22 +28,12 @@ Route::get('/divisions/amotech', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::middleware('auth')->group(function () {
-    Route::get('/appointments', function () {
-        return view('appointments');
-    })->name('appointments.index');
-
-    Route::get('/clients', function () {
-        return view('clients');
-    })->name('clients.index');
-
-    Route::get('/orders', function () {
-        return view('orders');
-    })->name('orders.index');
-
-    Route::get('/inventory', function () {
-        return view('inventory');
-    })->name('inventory.index');
+    Route::get('/home', [App\Http\Controllers\DashboardController::class, 'home'])->name('home');
+    Route::get('/appointments', [App\Http\Controllers\DashboardController::class, 'appointments'])->name('appointments.index');
+    Route::get('/clients', [App\Http\Controllers\DashboardController::class, 'clients'])->name('clients.index');
+    Route::get('/orders', [App\Http\Controllers\DashboardController::class, 'orders'])->name('orders.index');
+    Route::get('/inventory', [App\Http\Controllers\DashboardController::class, 'inventory'])->name('inventory.index');
+    Route::get('/reports', [App\Http\Controllers\DashboardController::class, 'reports'])->name('reports.index');
+    Route::get('/client-dashboard', [App\Http\Controllers\DashboardController::class, 'clientDashboard'])->name('client.dashboard');
 });
