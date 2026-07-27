@@ -36,6 +36,28 @@ class DashboardController extends Controller
             ->orderBy('quantity')
             ->get();
 
+        // Chart data: last 7 days revenue & appointment volume
+        $revenueDays = [];
+        $volumeDays = [];
+        $dayLabels = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $day = today()->subDays($i);
+            $dayLabels[] = $day->format('D');
+            $revenueDays[] = (int) Order::whereDate('created_at', $day)->sum('total');
+            $volumeDays[] = Appointment::whereDate('appointment_date', $day)->count();
+        }
+
+        // Appointments by service for donut chart
+        $appointmentsByService = Appointment::selectRaw('service, COUNT(*) as count')
+            ->groupBy('service')
+            ->pluck('count', 'service')
+            ->toArray();
+
+        // Attention items
+        $pendingAppointments = $newBookings;
+        $outOfStockItemsList = InventoryItem::where('quantity', 0)->limit(2)->get();
+        $dispatchesDueToday = Order::whereDate('eta', today())->where('status', 'transit')->count();
+
         return view('home', compact(
             'todayAppointments',
             'newBookings',
@@ -44,7 +66,14 @@ class DashboardController extends Controller
             'outOfStock',
             'lowStock',
             'appointments',
-            'lowStockItems'
+            'lowStockItems',
+            'revenueDays',
+            'volumeDays',
+            'dayLabels',
+            'appointmentsByService',
+            'pendingAppointments',
+            'outOfStockItemsList',
+            'dispatchesDueToday'
         ));
     }
 

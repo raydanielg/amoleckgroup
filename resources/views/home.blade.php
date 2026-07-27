@@ -81,9 +81,6 @@
 </div>
 
 @php
-    $revenueDays = [3200000, 4100000, 2800000, 5200000, 3900000, 6100000, 4520000];
-    $volumeDays  = [12, 18, 9, 22, 15, 28, 19];
-    $dayLabels   = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
     $revMax = max($revenueDays) ?: 1;
     $revSvgPoints = [];
     foreach($revenueDays as $i => $rev) {
@@ -99,7 +96,7 @@
 {{-- Charts Row --}}
 <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 mb-6">
     {{-- Revenue Area Chart --}}
-    <div class="bg-white rounded-xl border p-5 lg:col-span-2">
+    <div class="bg-white rounded-xl border p-5 lg:col-span-2 animate__animated animate__fadeInUp" style="animation-delay: 0.35s">
         <div class="flex items-center justify-between mb-4">
             <div>
                 <h3 class="text-sm font-semibold text-gray-900">Revenue</h3>
