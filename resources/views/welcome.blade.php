@@ -134,7 +134,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             {{-- AMES --}}
-            <a href="#ames" id="ames" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
+            <a href="{{ route('divisions.ames') }}" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
                 <div class="h-1.5 bg-emerald-600"></div>
                 <div class="p-7">
                     <div class="flex items-center gap-4 mb-4">
@@ -155,7 +155,7 @@
             </a>
 
             {{-- APHAMKO --}}
-            <a href="#aphamko" id="aphamko" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
+            <a href="{{ route('divisions.aphamko') }}" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
                 <div class="h-1.5 bg-gold-500"></div>
                 <div class="p-7">
                     <div class="flex items-center gap-4 mb-4">
@@ -176,7 +176,7 @@
             </a>
 
             {{-- ASCA --}}
-            <a href="#asca" id="asca" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
+            <a href="{{ route('divisions.asca') }}" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
                 <div class="h-1.5 bg-rose-500"></div>
                 <div class="p-7">
                     <div class="flex items-center gap-4 mb-4">
@@ -197,7 +197,7 @@
             </a>
 
             {{-- Physiotherapy --}}
-            <a href="#physiotherapy" id="physiotherapy" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
+            <a href="{{ route('divisions.physiotherapy') }}" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
                 <div class="h-1.5 bg-sky-500"></div>
                 <div class="p-7">
                     <div class="flex items-center gap-4 mb-4">
@@ -218,7 +218,7 @@
             </a>
 
             {{-- AMOTECH --}}
-            <a href="#amotech" id="amotech" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
+            <a href="{{ route('divisions.amotech') }}" class="division-card group bg-white rounded-2xl border border-gray-100 overflow-hidden block">
                 <div class="h-1.5 bg-violet-500"></div>
                 <div class="p-7">
                     <div class="flex items-center gap-4 mb-4">
