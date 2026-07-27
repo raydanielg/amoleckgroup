@@ -12,7 +12,7 @@
 </style>
 
 {{-- Header --}}
-<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap">
+<div class="mb-6 flex flex-row items-start sm:items-center justify-between gap-3 flex-wrap animate__animated animate__fadeInDown">
     <div class="min-w-0">
         <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 tracking-tight">Orders & Deliveries</h1>
         <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Track all product orders and delivery status</p>
@@ -31,75 +31,76 @@
 
 {{-- Quick Stats --}}
 <div class="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4 mb-6">
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.05s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Delivered</p>
-                <p class="text-xl font-bold text-gray-900">38</p>
+                <p class="text-xl font-bold text-gray-900">{{ $delivered ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">In Transit</p>
-                <p class="text-xl font-bold text-gray-900">7</p>
+                <p class="text-xl font-bold text-gray-900">{{ $transit ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.15s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Processing</p>
-                <p class="text-xl font-bold text-gray-900">5</p>
+                <p class="text-xl font-bold text-gray-900">{{ $processing ?? 0 }}</p>
             </div>
         </div>
     </div>
-    <div class="card-sm bg-white rounded-xl border p-4">
+    <div class="card-sm bg-white rounded-xl border p-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Delayed</p>
-                <p class="text-xl font-bold text-gray-900">2</p>
+                <p class="text-xl font-bold text-gray-900">{{ $delayed ?? 0 }}</p>
             </div>
         </div>
     </div>
 </div>
 
 {{-- Filters --}}
-<div class="bg-white rounded-xl border p-4 mb-6">
-    <div class="flex flex-col sm:flex-row gap-3">
+<div class="bg-white rounded-xl border p-4 mb-6 animate__animated animate__fadeInUp" style="animation-delay: 0.25s">
+    <form class="flex flex-col sm:flex-row gap-3" method="GET" action="{{ route('orders.index') }}">
         <div class="flex-1 relative">
             <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="orderSearch" placeholder="Search by order ref, customer, or phone..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by order ref, customer, or phone..." class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100 transition-all">
         </div>
-        <select id="filterDivision" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
+        <select name="division" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
             <option value="">All Divisions</option>
-            <option value="ames">AMES</option>
-            <option value="aphamko">APHAMKO</option>
-            <option value="asca">ASCA</option>
-            <option value="amotech">AMOTECH</option>
+            <option value="ames" {{ request('division') === 'ames' ? 'selected' : '' }}>AMES</option>
+            <option value="aphamko" {{ request('division') === 'aphamko' ? 'selected' : '' }}>APHAMKO</option>
+            <option value="asca" {{ request('division') === 'asca' ? 'selected' : '' }}>ASCA</option>
+            <option value="amotech" {{ request('division') === 'amotech' ? 'selected' : '' }}>AMOTECH</option>
         </select>
-        <select id="filterStatus" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
+        <select name="status" class="px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-emerald-300 bg-white">
             <option value="">All Status</option>
-            <option value="processing">Processing</option>
-            <option value="transit">In Transit</option>
-            <option value="delivered">Delivered</option>
-            <option value="delayed">Delayed</option>
-            <option value="cancelled">Cancelled</option>
+            <option value="processing" {{ request('status') === 'processing' ? 'selected' : '' }}>Processing</option>
+            <option value="transit" {{ request('status') === 'transit' ? 'selected' : '' }}>In Transit</option>
+            <option value="delivered" {{ request('status') === 'delivered' ? 'selected' : '' }}>Delivered</option>
+            <option value="delayed" {{ request('status') === 'delayed' ? 'selected' : '' }}>Delayed</option>
+            <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
         </select>
-    </div>
+        <button type="submit" class="px-3 py-2 text-sm font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">Filter</button>
+    </form>
 </div>
 
 {{-- Orders Table --}}
