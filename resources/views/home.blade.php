@@ -156,7 +156,7 @@
 {{-- Needs Attention & Low Stock --}}
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
     {{-- Needs Attention --}}
-    <div class="lg:col-span-2 bg-white rounded-xl border p-5">
+    <div class="lg:col-span-2 bg-white rounded-xl border p-5 animate__animated animate__fadeInUp" style="animation-delay: 0.45s">
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
@@ -167,49 +167,51 @@
                     <p class="text-[10px] text-gray-400">Most urgent items first</p>
                 </div>
             </div>
-            <span class="px-2 py-0.5 bg-red-50 text-red-700 text-[10px] font-bold rounded-md border border-red-100">4 urgent</span>
+            <span class="px-2 py-0.5 bg-red-50 text-red-700 text-[10px] font-bold rounded-md border border-red-100">{{ $pendingAppointments + $outOfStock + $dispatchesDueToday }} urgent</span>
         </div>
         <div class="space-y-2">
+            @if($pendingAppointments > 0)
             <a href="{{ route('appointments.index') }}" class="flex items-center gap-3 p-3 rounded-lg border border-amber-200 bg-amber-50/50 hover:bg-amber-50 transition-colors">
                 <div class="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
                     <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold text-gray-900">3 new bookings awaiting confirmation</p>
-                    <p class="text-[11px] text-gray-500 mt-0.5">Physiotherapy — Home visit requests</p>
+                    <p class="text-xs font-semibold text-gray-900">{{ $pendingAppointments }} new booking{{ $pendingAppointments > 1 ? 's' : '' }} awaiting confirmation</p>
+                    <p class="text-[11px] text-gray-500 mt-0.5">Physiotherapy & home visit requests</p>
                 </div>
                 <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </a>
-            <a href="#" class="flex items-center gap-3 p-3 rounded-lg border border-red-200 bg-red-50/50 hover:bg-red-50 transition-colors">
+            @endif
+
+            @if($outOfStockItemsList->count() > 0)
+            <a href="{{ route('inventory.index') }}" class="flex items-center gap-3 p-3 rounded-lg border border-red-200 bg-red-50/50 hover:bg-red-50 transition-colors">
                 <div class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                     <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold text-gray-900">2 items out of stock</p>
-                    <p class="text-[11px] text-gray-500 mt-0.5">APHAMKO — Amoxicillin 500mg, Paracetamol syrup</p>
+                    <p class="text-xs font-semibold text-gray-900">{{ $outOfStockItemsList->count() }} item{{ $outOfStockItemsList->count() > 1 ? 's' : '' }} out of stock</p>
+                    <p class="text-[11px] text-gray-500 mt-0.5">{{ $outOfStockItemsList->pluck('name')->implode(', ') }}</p>
                 </div>
                 <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </a>
-            <a href="#" class="flex items-center gap-3 p-3 rounded-lg border border-sky-200 bg-sky-50/50 hover:bg-sky-50 transition-colors">
+            @endif
+
+            @if($dispatchesDueToday > 0)
+            <a href="{{ route('orders.index') }}" class="flex items-center gap-3 p-3 rounded-lg border border-sky-200 bg-sky-50/50 hover:bg-sky-50 transition-colors">
                 <div class="w-9 h-9 rounded-full bg-sky-100 flex items-center justify-center shrink-0">
                     <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9"/></svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold text-gray-900">2 dispatches due today</p>
-                    <p class="text-[11px] text-gray-500 mt-0.5">ASCA skincare orders — Arusha & Moshi</p>
+                    <p class="text-xs font-semibold text-gray-900">{{ $dispatchesDueToday }} dispatch{{ $dispatchesDueToday > 1 ? 'es' : '' }} due today</p>
+                    <p class="text-[11px] text-gray-500 mt-0.5">Orders in transit with ETA today</p>
                 </div>
                 <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </a>
-            <a href="#" class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors">
-                <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
-                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                </div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold text-gray-900">1 AMOTECH project awaiting client feedback</p>
-                    <p class="text-[11px] text-gray-500 mt-0.5">Website redesign — 3 days overdue</p>
-                </div>
-                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            </a>
+            @endif
+
+            @if(($pendingAppointments + $outOfStock + $dispatchesDueToday) === 0)
+            <p class="text-sm text-gray-400 text-center py-4">No urgent items right now</p>
+            @endif
         </div>
     </div>
 
